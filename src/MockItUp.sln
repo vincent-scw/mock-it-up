@@ -7,14 +7,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockItUp.API", "MockItUp.AP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockItUp.Core", "MockItUp.Core\MockItUp.Core.csproj", "{2E7020A3-0CFB-4FF6-9574-63660CECB0F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockItUp.Restful", "MockItUp.Restful\MockItUp.Restful.csproj", "{9CB3F3A6-036B-4E4A-8232-C8DF768A89B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockItUp.Restful", "MockItUp.Restful\MockItUp.Restful.csproj", "{9CB3F3A6-036B-4E4A-8232-C8DF768A89B7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2E7020A3-0CFB-4FF6-9574-63660CECB0F2} = {2E7020A3-0CFB-4FF6-9574-63660CECB0F2}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8F00B7E8-13E3-4C4A-BA17-9A5C1BF7F25B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockItUp.HttpHost", "MockItUp.HttpHost\MockItUp.HttpHost.csproj", "{5BCE8517-ECCD-49FE-931B-471D35A3E649}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockItUp.HttpHost", "MockItUp.HttpHost\MockItUp.HttpHost.csproj", "{5BCE8517-ECCD-49FE-931B-471D35A3E649}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockItUp.Common", "MockItUp.Common\MockItUp.Common.csproj", "{7A24CAFA-82A9-4337-BF77-377645031B59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{5BCE8517-ECCD-49FE-931B-471D35A3E649}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BCE8517-ECCD-49FE-931B-471D35A3E649}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BCE8517-ECCD-49FE-931B-471D35A3E649}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A24CAFA-82A9-4337-BF77-377645031B59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A24CAFA-82A9-4337-BF77-377645031B59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A24CAFA-82A9-4337-BF77-377645031B59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A24CAFA-82A9-4337-BF77-377645031B59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
