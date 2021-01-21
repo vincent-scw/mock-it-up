@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockItUp.API", "MockItUp.API\MockItUp.API.csproj", "{86DC20F7-88F5-43BB-BC4A-1E235F37FC79}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockItUp.Core", "MockItUp.Core\MockItUp.Core.csproj", "{2E7020A3-0CFB-4FF6-9574-63660CECB0F2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockItUp.Restful", "MockItUp.Restful\MockItUp.Restful.csproj", "{9CB3F3A6-036B-4E4A-8232-C8DF768A89B7}"
@@ -24,16 +22,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "http", "http", "{76246A63-1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockItUp.Restful.Tests", "..\test\MockItUp.Restful.Tests\MockItUp.Restful.Tests.csproj", "{603CD40E-C11F-43BE-AB34-BCB4CA6EFE68}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3E2D4ACA-F301-48AE-8083-32C5EA9EBEC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{86DC20F7-88F5-43BB-BC4A-1E235F37FC79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86DC20F7-88F5-43BB-BC4A-1E235F37FC79}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86DC20F7-88F5-43BB-BC4A-1E235F37FC79}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86DC20F7-88F5-43BB-BC4A-1E235F37FC79}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2E7020A3-0CFB-4FF6-9574-63660CECB0F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2E7020A3-0CFB-4FF6-9574-63660CECB0F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E7020A3-0CFB-4FF6-9574-63660CECB0F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,8 +59,12 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{2E7020A3-0CFB-4FF6-9574-63660CECB0F2} = {3E2D4ACA-F301-48AE-8083-32C5EA9EBEC1}
 		{9CB3F3A6-036B-4E4A-8232-C8DF768A89B7} = {76246A63-1B36-4443-8966-0C8F5B3A5100}
 		{5BCE8517-ECCD-49FE-931B-471D35A3E649} = {76246A63-1B36-4443-8966-0C8F5B3A5100}
+		{7A24CAFA-82A9-4337-BF77-377645031B59} = {3E2D4ACA-F301-48AE-8083-32C5EA9EBEC1}
+		{96AA9FED-4506-460E-B2FF-1087005443CD} = {3E2D4ACA-F301-48AE-8083-32C5EA9EBEC1}
+		{76246A63-1B36-4443-8966-0C8F5B3A5100} = {3E2D4ACA-F301-48AE-8083-32C5EA9EBEC1}
 		{603CD40E-C11F-43BE-AB34-BCB4CA6EFE68} = {8F00B7E8-13E3-4C4A-BA17-9A5C1BF7F25B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
