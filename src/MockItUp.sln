@@ -16,7 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8F00B7E8-1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockItUp.HttpHost", "MockItUp.HttpHost\MockItUp.HttpHost.csproj", "{5BCE8517-ECCD-49FE-931B-471D35A3E649}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockItUp.Common", "MockItUp.Common\MockItUp.Common.csproj", "{7A24CAFA-82A9-4337-BF77-377645031B59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockItUp.Common", "MockItUp.Common\MockItUp.Common.csproj", "{7A24CAFA-82A9-4337-BF77-377645031B59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockItUp.Console", "MockItUp.Console\MockItUp.Console.csproj", "{96AA9FED-4506-460E-B2FF-1087005443CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "http", "http", "{76246A63-1B36-4443-8966-0C8F5B3A5100}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,9 +48,17 @@ Global
 		{7A24CAFA-82A9-4337-BF77-377645031B59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A24CAFA-82A9-4337-BF77-377645031B59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A24CAFA-82A9-4337-BF77-377645031B59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96AA9FED-4506-460E-B2FF-1087005443CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96AA9FED-4506-460E-B2FF-1087005443CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96AA9FED-4506-460E-B2FF-1087005443CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96AA9FED-4506-460E-B2FF-1087005443CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9CB3F3A6-036B-4E4A-8232-C8DF768A89B7} = {76246A63-1B36-4443-8966-0C8F5B3A5100}
+		{5BCE8517-ECCD-49FE-931B-471D35A3E649} = {76246A63-1B36-4443-8966-0C8F5B3A5100}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4E447407-4027-4944-8FF0-25742F9E8BE3}

@@ -18,8 +18,10 @@ namespace MockItUp.HttpHost
         public async Task StartAsync(CancellationToken cancelToken)
         {
             var listener = new HttpListener();
-            listener.Prefixes.Add("http://localhost:8000");
+            listener.Prefixes.Add("http://localhost:8000/");
             listener.Start();
+
+            _logger.Log($"Start to listen at http://localhost:8000/");
 
             var requestCount = 0;
             // When it is not cancelld
@@ -32,7 +34,7 @@ namespace MockItUp.HttpHost
                 var resp = ctx.Response;
 
                 _logger.Log($"Request #: {++requestCount}");
-                _logger.Log($"From: {req.HttpMethod} {req.Url}");
+                _logger.Log($"{req.HttpMethod} {req.Url}");
                 _logger.Log($"UserHostName: {req.UserHostName}");
                 _logger.Log($"UserAgent: {req.UserAgent}");
 
