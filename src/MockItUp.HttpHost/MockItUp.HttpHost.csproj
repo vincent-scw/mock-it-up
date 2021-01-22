@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MockItUp.Common\MockItUp.Common.csproj" />
+    <ProjectReference Include="..\MockItUp.Core\MockItUp.Core.csproj" />
   </ItemGroup>
 
 </Project>

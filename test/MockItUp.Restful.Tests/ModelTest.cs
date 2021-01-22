@@ -6,7 +6,7 @@ namespace MockItUp.Restful.Tests
     public class ModelTest
     {
         [Fact]
-        public void DeserilizeFromYaml_ShouldAsExpected()
+        public void DeserializeFromYaml_ShouldAsExpected()
         {
             var yaml = @"
 

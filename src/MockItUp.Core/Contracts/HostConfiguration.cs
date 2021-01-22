@@ -7,8 +7,13 @@ namespace MockItUp.Core.Contracts
     public class HostConfiguration
     {
         /// <summary>
+        /// Version
+        /// </summary>
+        public string Version { get; set; }
+
+        /// <summary>
         /// Host Url
         /// </summary>
-        public string Url { get; set; }
+        public IDictionary<string, string> Hosts { get; set; }
     }
 }

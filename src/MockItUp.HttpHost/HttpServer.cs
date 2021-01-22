@@ -1,4 +1,5 @@
 ﻿using MockItUp.Common.Logging;
+using MockItUp.Core.Contracts;
 using System;
 using System.Net;
 using System.Text;
@@ -10,18 +11,24 @@ namespace MockItUp.HttpHost
     public class HttpServer
     {
         private readonly ILogger _logger;
-        public HttpServer(ILogger logger)
+        private readonly HostConfiguration _hostConfiguration;
+        public HttpServer(ILogger logger, HostConfiguration hostConfiguration)
         {
             _logger = logger;
+            _hostConfiguration = hostConfiguration;
         }
 
         public async Task StartAsync(CancellationToken cancelToken)
         {
             var listener = new HttpListener();
-            listener.Prefixes.Add("http://localhost:8000/");
+            foreach (var v in _hostConfiguration.Hosts.Values)
+            {
+                listener.Prefixes.Add(v);
+            }
+            
             listener.Start();
 
-            _logger.Log($"Start to listen at http://localhost:8000/");
+            _logger.Log($"Start to listen...");
 
             var requestCount = 0;
             // When it is not cancelld
