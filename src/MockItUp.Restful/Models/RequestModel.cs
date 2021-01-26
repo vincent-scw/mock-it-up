@@ -8,6 +8,7 @@ namespace MockItUp.Restful.Models
         public IDictionary<string, string> Headers { get; set; }
         public string Path { get; set; }
         public string Body { get; set; }
+        public string TargetHost { get; set; }
         
         public BodyType BodyType { get; set; } = BodyType.Direct;
     }

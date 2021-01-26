@@ -1,6 +1,5 @@
 ﻿using MockItUp.Common.Logging;
-using MockItUp.Core.Contracts;
-using System;
+using MockItUp.Common.Contracts;
 using System.Net;
 using System.Text;
 using System.Threading;

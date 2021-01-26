@@ -20,4 +20,8 @@
     <PackageReference Include="YamlDotNet" Version="9.1.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\MockItUp.Restful\MockItUp.Restful.csproj" />
+  </ItemGroup>
+
 </Project>

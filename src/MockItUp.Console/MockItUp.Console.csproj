@@ -10,7 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MockItUp.Core\MockItUp.Core.csproj" />
     <ProjectReference Include="..\MockItUp.HttpHost\MockItUp.HttpHost.csproj" />
+    <ProjectReference Include="..\MockItUp.Restful\MockItUp.Restful.csproj" />
   </ItemGroup>
 
 </Project>

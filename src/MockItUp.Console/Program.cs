@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using MockItUp.Common.Contracts;
 using MockItUp.Common.Logging;
-using MockItUp.Core.Contracts;
+using MockItUp.Core;
 using MockItUp.HttpHost;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,7 @@ namespace MockItUp.Console
                 { "order", "http://localhost:5000/" },
                 { "shipment", "http://localhost:5010/" }
             }});
+            services.AddSingleton<SpecLoader>();
 
             _serviceProvider = services.BuildServiceProvider(true);
         }

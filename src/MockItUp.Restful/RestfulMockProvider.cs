@@ -1,5 +1,4 @@
-﻿using MockItUp.Core.Contracts;
-using System;
+﻿using MockItUp.Common.Contracts;
 
 namespace MockItUp.Restful
 {

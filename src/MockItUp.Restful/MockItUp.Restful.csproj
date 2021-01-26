@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MockItUp.Core\MockItUp.Core.csproj" />
+    <ProjectReference Include="..\MockItUp.Common\MockItUp.Common.csproj" />
   </ItemGroup>
 
 </Project>

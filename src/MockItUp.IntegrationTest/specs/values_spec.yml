@@ -1,0 +1,14 @@
+﻿version: v1
+type: restful
+specs:
+  - request:
+      method: get
+      path: api/values
+    response:
+      body: hello world
+  - request:
+      method: post
+      path: api/values
+      body: abc
+    response:
+      statusCode: 204
