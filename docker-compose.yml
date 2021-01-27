@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  mockserver:
+    build:
+      context: ./src
+      dockerfile: MockItUp.Console/Dockerfile
+    environment:
+      - SETTING_FILE=/app/mockitup.d/host_config.yml
+    volumes:
+      - ./test/mockitup.d:/app/mockitup.d

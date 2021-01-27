@@ -1,12 +1,9 @@
 ﻿using log4net;
 using log4net.Config;
-using log4net.Core;
 using Microsoft.Extensions.DependencyInjection;
 using MockItUp.Common.Contracts;
-using MockItUp.Common.Logging;
 using MockItUp.Core;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -23,23 +20,32 @@ namespace MockItUp.Console
             var logRepo = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepo, new FileInfo("log4net.config"));
 
+            while (true)
+            {
+                System.Threading.Thread.Sleep(2000);
+            }
+
             try
             {
+                System.Console.WriteLine(Directory.Exists(Environment.GetEnvironmentVariable("SETTING_FILE")));
+
                 System.Console.WriteLine("Server starting...");
-                RegisterServices();
+                //RegisterServices();
 
-                var registry = _serviceProvider.GetService<ISpecRegistry>();
-                registry.RegisterDirectory(@"C:\Projects\My\mock-it-up\src\MockItUp.IntegrationTest\specs");
+                //var hostConfig = _serviceProvider.GetService<HostConfiguration>();
 
-                var httpServer = _serviceProvider.GetService<HttpServer>();
-                var cancellationTokenSource = new CancellationTokenSource();
-                var cancellationToken = cancellationTokenSource.Token;
-                await httpServer.StartAsync(cancellationToken);
+                //var registry = _serviceProvider.GetService<ISpecRegistry>();
+                //registry.RegisterDirectory(hostConfig.SpecDirectory);
 
-                System.Console.WriteLine("Press any key to close");
-                System.Console.ReadKey();
+                //var httpServer = _serviceProvider.GetService<HttpServer>();
+                //var cancellationTokenSource = new CancellationTokenSource();
+                //var cancellationToken = cancellationTokenSource.Token;
+                //await httpServer.StartAsync(cancellationToken);
 
-                cancellationTokenSource.Cancel();
+                //System.Console.WriteLine("Press any key to close");
+                System.Console.Read();
+
+                //cancellationTokenSource.Cancel();
             }
             finally
             {
@@ -51,11 +57,7 @@ namespace MockItUp.Console
         {
             var services = new ServiceCollection();
             services.AddSingleton<HttpServer>();
-            services.AddSingleton<HostConfiguration>((s) => new HostConfiguration { Hosts = new Dictionary<string, string>
-            {
-                { "order", "http://localhost:5000/" },
-                { "shipment", "http://localhost:5010/" }
-            }});
+            services.AddSingleton((s) => Common.YamlSerializer.DeserializeFile<HostConfiguration>(Environment.GetEnvironmentVariable("SETTING_FILE")));
             services.AddSingleton<ISpecLoader, SpecLoader>();
             services.AddSingleton<ISpecRegistry, SpecRegistry>();
 

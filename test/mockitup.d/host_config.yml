@@ -1,0 +1,5 @@
+﻿version: v1
+specDirectory: /mockitupd/specs/
+hosts:
+	order: http://localhost:5000/
+	shipment: http://localhost:5010/
