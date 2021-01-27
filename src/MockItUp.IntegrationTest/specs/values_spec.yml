@@ -1,11 +1,11 @@
 ﻿version: v1
 type: restful
-specs:
+rules:
   - request:
       method: get
       path: api/values
     response:
-      body: hello world
+      body: '{ "msg": "hello world"}'
   - request:
       method: post
       path: api/values

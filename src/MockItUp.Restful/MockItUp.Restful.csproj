@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="UriTemplate.Core" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MockItUp.Common\MockItUp.Common.csproj" />
   </ItemGroup>
 

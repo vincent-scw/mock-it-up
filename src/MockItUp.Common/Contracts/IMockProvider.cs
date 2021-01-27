@@ -7,5 +7,6 @@ namespace MockItUp.Common.Contracts
     public interface IMockProvider
     {
         MockTypeEnum MockType { get; }
+        IRequestHandler RequestHandler { get; }
     }
 }

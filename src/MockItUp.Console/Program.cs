@@ -2,7 +2,6 @@
 using MockItUp.Common.Contracts;
 using MockItUp.Common.Logging;
 using MockItUp.Core;
-using MockItUp.HttpHost;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -20,6 +19,9 @@ namespace MockItUp.Console
             {
                 System.Console.WriteLine("Server starting...");
                 RegisterServices();
+
+                var registry = _serviceProvider.GetService<ISpecRegistry>();
+                registry.RegisterDirectory(@"C:\Projects\My\mock-it-up\src\MockItUp.IntegrationTest\specs");
 
                 var httpServer = _serviceProvider.GetService<HttpServer>();
                 var cancellationTokenSource = new CancellationTokenSource();
@@ -47,7 +49,10 @@ namespace MockItUp.Console
                 { "order", "http://localhost:5000/" },
                 { "shipment", "http://localhost:5010/" }
             }});
-            services.AddSingleton<SpecLoader>();
+            services.AddSingleton<ISpecLoader, SpecLoader>();
+            services.AddSingleton<ISpecRegistry, SpecRegistry>();
+
+            services.AddSingleton<IMockProvider, Restful.RestfulMockProvider>();
 
             _serviceProvider = services.BuildServiceProvider(true);
         }

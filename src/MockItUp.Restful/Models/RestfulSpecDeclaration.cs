@@ -5,6 +5,6 @@ namespace MockItUp.Restful.Models
 {
     public class RestfulSpecDeclaration : SpecDeclaration
     {
-        public IList<SpecItem> Specs { get; set; }
+        public IList<RuleItem> Rules { get; set; }
     }
 }
