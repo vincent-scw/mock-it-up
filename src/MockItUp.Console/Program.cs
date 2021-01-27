@@ -1,9 +1,14 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using log4net;
+using log4net.Config;
+using log4net.Core;
+using Microsoft.Extensions.DependencyInjection;
 using MockItUp.Common.Contracts;
 using MockItUp.Common.Logging;
 using MockItUp.Core;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,6 +20,9 @@ namespace MockItUp.Console
 
         static async Task Main(string[] args)
         {
+            var logRepo = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            XmlConfigurator.Configure(logRepo, new FileInfo("log4net.config"));
+
             try
             {
                 System.Console.WriteLine("Server starting...");
@@ -43,7 +51,6 @@ namespace MockItUp.Console
         {
             var services = new ServiceCollection();
             services.AddSingleton<HttpServer>();
-            services.AddSingleton<ILogger, ConsoleLogger>();
             services.AddSingleton<HostConfiguration>((s) => new HostConfiguration { Hosts = new Dictionary<string, string>
             {
                 { "order", "http://localhost:5000/" },

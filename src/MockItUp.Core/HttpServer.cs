@@ -1,20 +1,20 @@
-﻿using MockItUp.Common.Logging;
-using MockItUp.Common.Contracts;
+﻿using MockItUp.Common.Contracts;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using log4net;
 
 namespace MockItUp.Core
 {
     public class HttpServer
     {
-        private readonly ILogger _logger;
+        private readonly ILog _logger;
         private readonly HostConfiguration _hostConfiguration;
         private readonly IRequestHandler _handler;
-        public HttpServer(ILogger logger, HostConfiguration hostConfiguration, IMockProvider provider)
+        public HttpServer(HostConfiguration hostConfiguration, IMockProvider provider)
         {
-            _logger = logger;
+            _logger = LogManager.GetLogger(typeof(HttpServer));
             _hostConfiguration = hostConfiguration;
             _handler = provider.RequestHandler;
         }
@@ -29,7 +29,7 @@ namespace MockItUp.Core
             
             listener.Start();
 
-            _logger.Log($"Start to listen...");
+            _logger.Info($"Start to listen...");
 
             var requestCount = 0;
             // When it is not cancelld
@@ -40,14 +40,14 @@ namespace MockItUp.Core
 
                 var req = ctx.Request;
 
-                _logger.Log($"Request #: {++requestCount}");
-                _logger.Log($"{req.HttpMethod} {req.Url}");
+                _logger.Info($"Request #: {++requestCount}");
+                _logger.Info($"{req.HttpMethod} {req.Url}");
                 var reader = new System.IO.StreamReader(req.InputStream);
-                _logger.Log(reader.ReadToEnd());
+                _logger.Info(reader.ReadToEnd());
 
                 await _handler.HandleAsync(ctx);
 
-                _logger.Log($"Response sent.");
+                _logger.Info($"Response sent.");
             }
         }
     }
