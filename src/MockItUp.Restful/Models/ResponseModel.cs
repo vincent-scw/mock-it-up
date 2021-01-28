@@ -8,6 +8,7 @@ namespace MockItUp.Restful.Models
         public string Body { get; set; }
         public int StatusCode { get; set; } = 200;
         public string ContentType { get; set; } = "application/json";
+        public int Delay { get; set; }
 
         public BodyType BodyType { get; set; } = BodyType.Direct;
     }

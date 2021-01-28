@@ -45,7 +45,7 @@ namespace MockItUp.Core
                 _logger.Info($"Request #: {++requestCount}");
                 _logger.Info($"{req.HttpMethod} {req.Url}");
                 var reader = new System.IO.StreamReader(req.InputStream);
-                _logger.Info(reader.ReadToEnd());
+                _logger.Info($"Body: {reader.ReadToEnd()}");
 
                 await _handler.HandleAsync(ctx);
 

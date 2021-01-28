@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Text;
+using log4net;
 
 namespace MockItUp.Restful
 {
@@ -15,10 +16,12 @@ namespace MockItUp.Restful
 
         private readonly IReadOnlyDictionary<string, IList<RuleItem>> _items;
         private readonly IDictionary<string, int> _hosts;
+        private readonly ILog _log;
         public RestfulRequestHandler(ISpecRegistry registry, HostConfiguration hostConfiguration)
         {
             _items = BuildItemDictionary(registry.GetSpecs("restful"));
             _hosts = hostConfiguration.Hosts;
+            _log = LogManager.GetLogger(typeof(RestfulRequestHandler));
         }
 
         public async Task HandleAsync(HttpListenerContext context)
@@ -33,21 +36,32 @@ namespace MockItUp.Restful
 
             var matched = candidates.FirstOrDefault(d => d.Matches(context.Request) != null);
             if (matched == null)
+            {
+                _log.Info($"Cannot find matched rule. Request ignored.");
                 return;
+            }
+
+            if (matched.Response.Delay > 0)
+            {
+                System.Threading.Thread.Sleep(matched.Response.Delay);
+            }
 
             var resp = context.Response;
 
             resp.StatusCode = matched.Response.StatusCode;
             resp.ContentType = matched.Response.ContentType;
 
-            byte[] data = Encoding.UTF8.GetBytes(matched.Response.BodyType == BodyType.Direct
+            var body = matched.Response.BodyType == BodyType.Direct
                 ? matched.Response.Body :
-                System.IO.File.ReadAllText(matched.Response.Body));
+                System.IO.File.ReadAllText(matched.Response.Body);
+            byte[] data = Encoding.UTF8.GetBytes(body);
             resp.ContentEncoding = Encoding.UTF8;
             resp.ContentLength64 = data.LongLength;
 
             await resp.OutputStream.WriteAsync(data, 0, data.Length);
             resp.Close();
+
+            _log.Info($"Response sent with body: {body}");
         }
 
         private static IReadOnlyDictionary<string, IList<RuleItem>> BuildItemDictionary(IReadOnlyCollection<SpecDeclaration> specs) 
