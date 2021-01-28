@@ -16,7 +16,7 @@ namespace MockItUp.Console
         private static string _configPath;
         private static IServiceProvider _serviceProvider;
 
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             var logRepo = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepo, new FileInfo("log4net.config"));
@@ -38,7 +38,7 @@ namespace MockItUp.Console
                 var httpServer = _serviceProvider.GetService<HttpServer>();
                 var cancellationTokenSource = new CancellationTokenSource();
                 var cancellationToken = cancellationTokenSource.Token;
-                await httpServer.StartAsync(cancellationToken);
+                httpServer.Start(cancellationToken);
 
                 cancellationTokenSource.Cancel();
             }

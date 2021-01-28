@@ -19,37 +19,55 @@ namespace MockItUp.Core
             _handler = provider.RequestHandler;
         }
 
-        public async Task StartAsync(CancellationToken cancelToken)
+        public void Start(CancellationToken cancelToken)
         {
             var listener = new HttpListener();
-            foreach (var v in _hostConfiguration.Hosts.Values)
+            listener.IgnoreWriteExceptions = true;
+
+            foreach (var v in _hostConfiguration.Services.Values)
             {
-                var prefix = $"http://*:{v}/";
+                var prefix = $"http://{_hostConfiguration.Host}:{v}/";
                 listener.Prefixes.Add(prefix);
                 _logger.Info($"Listen at {prefix}");
             }
-            
-            listener.Start();
 
-            _logger.Info($"Start to listen...");
+            try
+            {
+                listener.Start();
+                _logger.Info($"Start to listen...");
+            }
+            catch (HttpListenerException hlex)
+            {
+                _logger.Error(hlex.Message, hlex);
+                throw hlex;
+            }
 
-            var requestCount = 0;
+            var sem = new Semaphore(_hostConfiguration.AcceptConnections, _hostConfiguration.AcceptConnections);
+
             // When it is not cancelld
             while (!cancelToken.IsCancellationRequested)
             {
+                sem.WaitOne();
+
+#pragma warning disable 4014
                 // Wait here until we hear from a connection
-                var ctx = await listener.GetContextAsync();
+                listener.GetContextAsync().ContinueWith(async t =>
+                {
+                    sem.Release();
 
-                var req = ctx.Request;
+                    var ctx = await t;
+                    var req = ctx.Request;
 
-                _logger.Info($"Request #: {++requestCount}");
-                _logger.Info($"{req.HttpMethod} {req.Url}");
-                var reader = new System.IO.StreamReader(req.InputStream);
-                _logger.Info($"Body: {reader.ReadToEnd()}");
+                    //_logger.Info($"Request #: {++requestCount}");
+                    _logger.Info($"{req.HttpMethod} {req.Url}");
+                    var reader = new System.IO.StreamReader(req.InputStream);
+                    _logger.Info($"Body: {reader.ReadToEnd()}");
 
-                await _handler.HandleAsync(ctx);
+                    await _handler.HandleAsync(ctx);
 
-                _logger.Info($"Response sent.");
+                    _logger.Info($"Completed.");
+                });
+#pragma warning restore 4014
             }
         }
     }

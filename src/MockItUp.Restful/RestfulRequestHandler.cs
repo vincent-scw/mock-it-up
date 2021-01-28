@@ -20,7 +20,7 @@ namespace MockItUp.Restful
         public RestfulRequestHandler(ISpecRegistry registry, HostConfiguration hostConfiguration)
         {
             _items = BuildItemDictionary(registry.GetSpecs("restful"));
-            _hosts = hostConfiguration.Hosts;
+            _hosts = hostConfiguration.Services;
             _log = LogManager.GetLogger(typeof(RestfulRequestHandler));
         }
 
@@ -36,10 +36,7 @@ namespace MockItUp.Restful
 
             var matched = candidates.FirstOrDefault(d => d.Matches(context.Request) != null);
             if (matched == null)
-            {
-                _log.Info($"Cannot find matched rule. Request ignored.");
-                return;
-            }
+                throw new NotSupportedException($"Cannot find matched rule. Request ignored.");
 
             if (matched.Response.Delay > 0)
             {

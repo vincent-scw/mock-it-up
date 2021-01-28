@@ -7,9 +7,6 @@ services:
       dockerfile: MockItUp.Console/Dockerfile
     environment:
       - SETTING_FILE=/etc/mockitup.d/conf.yml
-    expose:
-      - 5000
-      - 5010
     ports:
       - 5000:5000
       - 5010:5010

@@ -6,6 +6,7 @@ rules:
       path: api/values{?v}
     response:
       body: '{ "msg": "hello world"}'
+      delay: 100
   - request:
       method: post
       path: api/values

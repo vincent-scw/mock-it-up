@@ -11,9 +11,17 @@ namespace MockItUp.Common.Contracts
         /// </summary>
         public string Version { get; set; }
         /// <summary>
-        /// Host Url
+        /// Host
         /// </summary>
-        public IDictionary<string, int> Hosts { get; set; }
+        public string Host { get; set; } = "*";
+        /// <summary>
+        /// Accept connections simultaneously
+        /// </summary>
+        public int AcceptConnections { get; set; } = 5;
+        /// <summary>
+        /// Services
+        /// </summary>
+        public IDictionary<string, int> Services { get; set; }
         /// <summary>
         /// The directory for spec files
         /// </summary>

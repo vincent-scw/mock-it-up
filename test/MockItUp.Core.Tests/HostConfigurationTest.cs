@@ -22,7 +22,7 @@ hosts:
 
             var hc = deserializer.Deserialize<Common.Contracts.HostConfiguration>(yaml);
             Assert.Equal("v1", hc.Version);
-            Assert.Equal(2, hc.Hosts.Count);
+            Assert.Equal(2, hc.Services.Count);
         }
     }
 }
