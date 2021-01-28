@@ -1,15 +1,16 @@
-﻿using MockItUp.Common;
+﻿using log4net;
+using MockItUp.Common;
 using MockItUp.Common.Contracts;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
 namespace MockItUp.Core
 {
     public class SpecLoader : ISpecLoader
     {
+        private readonly ILog _log = LogManager.GetLogger(typeof(SpecLoader));
+
         public SpecDeclaration Load(string content)
         {
             var model = YamlSerializer.Deserialize<SpecDeclaration>(content);
@@ -40,7 +41,7 @@ namespace MockItUp.Core
                 }
                 catch (Exception ex)
                 {
-                    //TODO: log
+                    _log.Error($"Load spec error: {ex.Message}", ex);
                     throw ex;
                 }
             }

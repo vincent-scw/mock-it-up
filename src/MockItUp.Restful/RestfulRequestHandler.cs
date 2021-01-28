@@ -14,20 +14,16 @@ namespace MockItUp.Restful
         private const string WILDCARD = "*";
 
         private readonly IReadOnlyDictionary<string, IList<RuleItem>> _items;
-        private readonly IDictionary<string, Uri> _hosts;
+        private readonly IDictionary<string, int> _hosts;
         public RestfulRequestHandler(ISpecRegistry registry, HostConfiguration hostConfiguration)
         {
             _items = BuildItemDictionary(registry.GetSpecs("restful"));
-            _hosts = new Dictionary<string, Uri>();
-            foreach (var hc in hostConfiguration.Hosts)
-            {
-                _hosts.Add(hc.Key, new Uri(hc.Value));
-            }
+            _hosts = hostConfiguration.Hosts;
         }
 
         public async Task HandleAsync(HttpListenerContext context)
         {
-            var host = _hosts.FirstOrDefault(kv => kv.Value.IsBaseOf(context.Request.Url));
+            var host = _hosts.FirstOrDefault(kv => kv.Value == context.Request.Url.Port);
             if (host.Key == null)
                 throw new NotSupportedException($"Cannot handle request {context.Request.Url}. Host not found.");
 
@@ -35,7 +31,7 @@ namespace MockItUp.Restful
                 _items[host.Key] :
                 _items.SelectMany(x => x.Value);
 
-            var matched = candidates.FirstOrDefault(d => d.Matches(context.Request, host.Value));
+            var matched = candidates.FirstOrDefault(d => d.Matches(context.Request) != null);
             if (matched == null)
                 return;
 

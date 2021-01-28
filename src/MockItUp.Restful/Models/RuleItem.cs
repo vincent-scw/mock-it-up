@@ -1,27 +1,24 @@
-﻿namespace MockItUp.Restful.Models
+﻿using System;
+using UriTemplate.Core;
+
+namespace MockItUp.Restful.Models
 {
     public class RuleItem
     {
         public RequestModel Request { get; set; }
         public ResponseModel Response { get; set; }
 
-        public bool Matches(System.Net.HttpListenerRequest request, System.Uri baseUri)
+        public UriTemplateMatch Matches(System.Net.HttpListenerRequest request)
         {
             // Check http method
-            if (!Request.Method.Equals(request.HttpMethod, System.StringComparison.InvariantCultureIgnoreCase))
-                return false;
+            if (!Request.Method.Equals(request.HttpMethod, StringComparison.InvariantCultureIgnoreCase))
+                return null;
 
             // Check path
-            var template = new UriTemplate.Core.UriTemplate(Request.Path);
-            var matchResult = template.Match(baseUri, request.Url);
-            if (matchResult == null)
-                return false;
-
-            // Check headers
-
-            // Check body
-
-            return true;
+            // Use requested host to match template
+            var template = new UriTemplate.Core.UriTemplate($"{request.Url.Scheme}://{request.Url.Authority}/{Request.Path}");
+            var matchResult = template.Match(request.Url);
+            return matchResult;
         }
     }
 }

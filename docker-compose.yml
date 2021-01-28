@@ -6,6 +6,12 @@ services:
       context: ./src
       dockerfile: MockItUp.Console/Dockerfile
     environment:
-      - SETTING_FILE=/app/mockitup.d/host_config.yml
+      - SETTING_FILE=/etc/mockitup.d/conf.yml
+    expose:
+      - 5000
+      - 5010
+    ports:
+      - 5000:5000
+      - 5010:5010
     volumes:
-      - ./test/mockitup.d:/app/mockitup.d
+      - ./test/mockitup.d:/etc/mockitup.d

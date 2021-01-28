@@ -3,12 +3,11 @@ type: restful
 rules:
   - request:
       method: get
-      path: api/values
+      path: api/values{?v}
     response:
       body: '{ "msg": "hello world"}'
   - request:
       method: post
       path: api/values
-      body: abc
     response:
       statusCode: 204

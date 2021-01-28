@@ -24,7 +24,9 @@ namespace MockItUp.Core
             var listener = new HttpListener();
             foreach (var v in _hostConfiguration.Hosts.Values)
             {
-                listener.Prefixes.Add(v);
+                var prefix = $"http://*:{v}/";
+                listener.Prefixes.Add(prefix);
+                _logger.Info($"Listen at {prefix}");
             }
             
             listener.Start();

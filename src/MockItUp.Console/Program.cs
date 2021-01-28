@@ -13,6 +13,7 @@ namespace MockItUp.Console
 {
     class Program
     {
+        private static string _configPath;
         private static IServiceProvider _serviceProvider;
 
         static async Task Main(string[] args)
@@ -20,32 +21,30 @@ namespace MockItUp.Console
             var logRepo = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepo, new FileInfo("log4net.config"));
 
-            while (true)
-            {
-                System.Threading.Thread.Sleep(2000);
-            }
+            var log = LogManager.GetLogger("main");
+
+            RegisterServices();
+
+            _configPath = args.Length > 0 ? args[0] : Environment.GetEnvironmentVariable("SETTING_FILE");
+
+            log.Info($"Load settings from {_configPath}");
 
             try
             {
-                System.Console.WriteLine(Directory.Exists(Environment.GetEnvironmentVariable("SETTING_FILE")));
+                var hostConfig = _serviceProvider.GetService<HostConfiguration>();
+                var registry = _serviceProvider.GetService<ISpecRegistry>();
+                registry.RegisterDirectory(hostConfig.SpecDirectory);
 
-                System.Console.WriteLine("Server starting...");
-                //RegisterServices();
+                var httpServer = _serviceProvider.GetService<HttpServer>();
+                var cancellationTokenSource = new CancellationTokenSource();
+                var cancellationToken = cancellationTokenSource.Token;
+                await httpServer.StartAsync(cancellationToken);
 
-                //var hostConfig = _serviceProvider.GetService<HostConfiguration>();
-
-                //var registry = _serviceProvider.GetService<ISpecRegistry>();
-                //registry.RegisterDirectory(hostConfig.SpecDirectory);
-
-                //var httpServer = _serviceProvider.GetService<HttpServer>();
-                //var cancellationTokenSource = new CancellationTokenSource();
-                //var cancellationToken = cancellationTokenSource.Token;
-                //await httpServer.StartAsync(cancellationToken);
-
-                //System.Console.WriteLine("Press any key to close");
-                System.Console.Read();
-
-                //cancellationTokenSource.Cancel();
+                cancellationTokenSource.Cancel();
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message, ex);
             }
             finally
             {
@@ -57,7 +56,7 @@ namespace MockItUp.Console
         {
             var services = new ServiceCollection();
             services.AddSingleton<HttpServer>();
-            services.AddSingleton((s) => Common.YamlSerializer.DeserializeFile<HostConfiguration>(Environment.GetEnvironmentVariable("SETTING_FILE")));
+            services.AddSingleton((s) => Common.YamlSerializer.DeserializeFile<HostConfiguration>(_configPath));
             services.AddSingleton<ISpecLoader, SpecLoader>();
             services.AddSingleton<ISpecRegistry, SpecRegistry>();
 
