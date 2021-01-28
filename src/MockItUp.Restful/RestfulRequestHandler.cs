@@ -34,7 +34,7 @@ namespace MockItUp.Restful
                 _items[host.Key] :
                 _items.SelectMany(x => x.Value);
 
-            var matched = candidates.FirstOrDefault(d => d.Matches(context.Request) != null);
+            var matched = candidates.FirstOrDefault(d => d.Match(context.Request.HttpMethod, context.Request.Url) != null);
             if (matched == null)
                 throw new NotSupportedException($"Cannot find matched rule. Request ignored.");
 

@@ -8,16 +8,16 @@ namespace MockItUp.Restful.Models
         public RequestModel Request { get; set; }
         public ResponseModel Response { get; set; }
 
-        public UriTemplateMatch Matches(System.Net.HttpListenerRequest request)
+        public UriTemplateMatch Match(string method, Uri url)
         {
             // Check http method
-            if (!Request.Method.Equals(request.HttpMethod, StringComparison.InvariantCultureIgnoreCase))
+            if (!Request.Method.Equals(method, StringComparison.InvariantCultureIgnoreCase))
                 return null;
 
             // Check path
             // Use requested host to match template
-            var template = new UriTemplate.Core.UriTemplate($"{request.Url.Scheme}://{request.Url.Authority}/{Request.Path}");
-            var matchResult = template.Match(request.Url);
+            var template = new UriTemplate.Core.UriTemplate($"{url.Scheme}://{url.Authority}/{Request.Path}");
+            var matchResult = template.Match(url);
             return matchResult;
         }
     }

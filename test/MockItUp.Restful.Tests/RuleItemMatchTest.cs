@@ -1,25 +1,33 @@
 ﻿using MockItUp.Restful.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace MockItUp.Restful.Tests
 {
     public class RuleItemMatchTest
     {
-        [Fact]
-        public void MatchCases_ShouldReturnTrue()
+        [Theory]
+        [InlineData("api/values", "http://localhost:5000/api/values", true)]
+        [InlineData("api/values{?v}", "http://localhost:5000/api/values?v=1", true)]
+        [InlineData("api/values{?v,c}", "http://localhost:5000/api/values?c=acc&v=1", true)]
+        [InlineData("api/values/{id}", "http://localhost:5000/api/values/1", true)]
+        [InlineData("api/values", "HTTP://LOCALHOST:5000/API/VALUES", false)]
+        public void PathMatch_ShouldSucceed(string pattern, string candidate, bool match)
         {
             var item = new RuleItem
             {
                 Request = new RequestModel
                 {
                     Method = "GET",
-                    Path = "/api/values"
+                    Path = pattern
                 }
             };
 
+            var result = item.Match("get", new Uri(candidate));
+            if (match)
+                Assert.NotNull(result);
+            else
+                Assert.Null(result);
         }
     }
 }
