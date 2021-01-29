@@ -6,7 +6,7 @@ namespace MockItUp.Restful
     {
         public RestfulMockProvider(ISpecRegistry registry, HostConfiguration hostConfiguration)
         {
-            RequestHandler = new RestfulRequestHandler(registry, hostConfiguration);
+            RequestHandler = new RestfulRequestHandler(registry, new ResponseResolver(), hostConfiguration);
         }
 
         public MockTypeEnum MockType => MockTypeEnum.Restful;

@@ -6,6 +6,7 @@ namespace MockItUp.Restful.Models
 {
     public enum BodyType
     {
+        Auto,
         Direct,
         File
     }

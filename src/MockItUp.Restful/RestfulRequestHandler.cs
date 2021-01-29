@@ -16,11 +16,15 @@ namespace MockItUp.Restful
 
         private readonly IReadOnlyDictionary<string, IList<RuleItem>> _items;
         private readonly IDictionary<string, int> _hosts;
+        private readonly ResponseResolver _resolver;
         private readonly ILog _log;
-        public RestfulRequestHandler(ISpecRegistry registry, HostConfiguration hostConfiguration)
+        public RestfulRequestHandler(ISpecRegistry registry,
+            ResponseResolver resolver,
+            HostConfiguration hostConfiguration)
         {
             _items = BuildItemDictionary(registry.GetSpecs("restful"));
             _hosts = hostConfiguration.Services;
+            _resolver = resolver;
             _log = LogManager.GetLogger(typeof(RestfulRequestHandler));
         }
 
@@ -44,21 +48,9 @@ namespace MockItUp.Restful
             }
 
             var resp = context.Response;
+            await _resolver.Resolve(resp, matched.Response);
 
-            resp.StatusCode = matched.Response.StatusCode;
-            resp.ContentType = matched.Response.ContentType;
-
-            var body = matched.Response.BodyType == BodyType.Direct
-                ? matched.Response.Body :
-                System.IO.File.ReadAllText(matched.Response.Body);
-            byte[] data = Encoding.UTF8.GetBytes(body);
-            resp.ContentEncoding = Encoding.UTF8;
-            resp.ContentLength64 = data.LongLength;
-
-            await resp.OutputStream.WriteAsync(data, 0, data.Length);
             resp.Close();
-
-            _log.Info($"Response sent with body: {body}");
         }
 
         private static IReadOnlyDictionary<string, IList<RuleItem>> BuildItemDictionary(IReadOnlyCollection<SpecDeclaration> specs) 
