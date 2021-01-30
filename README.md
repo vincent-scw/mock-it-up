@@ -1,7 +1,7 @@
 # mock-it-up
 Mock It Up is a mock server via configuration files.
 
-# Config the mock server
+## Config the mock server
 Mock It Up reads configuration files (called 'Spec') when start.
 The Spec is a ```yaml``` file looks like
 ```
@@ -34,8 +34,8 @@ You can add ```rules``` to setup inputs ```request``` and expected result ```res
 | Property   | Required? | Avaliable Options | Notes                                                            |
 |------------|-----------|-------------------|------------------------------------------------------------------|
 | statusCode | optional  |                   | The status code of http response. Default: 200                   |
-| body       | required  | string/file path  | The body of http response. It can be direct string or file path. |
+| body       | optional  | string/file path  | The body of http response. It can be direct string or file path. |
 | bodyType   | optional  | direct/file/auto  | Default: auto                                                    |
 
-# Run test
-docker-compose
+## Run test
+1. Use ```docker-compose```. It will run both the mock server and tests.
