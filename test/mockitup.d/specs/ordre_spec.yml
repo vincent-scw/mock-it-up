@@ -3,12 +3,12 @@ type: restful
 rules:
   - request:
       method: get
-      path: api/values{?v}
+      path: api/orders/{id}
     response:
-      body: '{ "msg": "hello world"}'
+      body: /etc/mockitup.d/payloads/order.json
       delay: 100
   - request:
       method: post
-      path: api/values
+      path: api/orders
     response:
       statusCode: 204

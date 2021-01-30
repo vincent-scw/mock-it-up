@@ -1,0 +1,17 @@
+{
+	"shipmentId": "SH20210101LA",
+	"routing": [
+		{ 
+			"code":"CNSHA",
+			"sequence": 1
+		},
+		{
+			"code": "KRPUS",
+			"sequence": 2
+		},
+		{
+			"code": "USLAX",
+			"sequence": 3
+		}
+	]
+}
