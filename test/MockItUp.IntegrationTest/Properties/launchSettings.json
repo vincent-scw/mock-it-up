@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "MockItUp.IntegrationTest": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "SERVICE_ORDER": "http://localhost:5000/",
+        "SERVICE_SHIPMENT": "http://localhost:5010/"
+      },
+      "sqlDebugging": true
+    }
+  }
+}

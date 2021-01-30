@@ -8,7 +8,7 @@ rules:
       body: /etc/mockitup.d/payloads/order.json
       delay: 100
   - request:
-      method: post
+      method: put
       path: api/orders
     response:
-      statusCode: 204
+      statusCode: 201

@@ -1,0 +1,14 @@
+version: v1
+type: restful
+rules:
+  - request:
+      method: get
+      path: api/shipments/{id}
+    response:
+      body: /etc/mockitup.d/payloads/shipment.json
+      delay: 100
+  - request:
+      method: put
+      path: api/shipments
+    response:
+      statusCode: 201
