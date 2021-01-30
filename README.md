@@ -4,7 +4,7 @@ Mock It Up is a mock server via configuration files.
 ## Config the mock server
 Mock It Up reads configuration files (called 'Spec') when start.
 The Spec is a ```yaml``` file looks like
-```
+```yml
 version: v1
 type: restful
 rules:
