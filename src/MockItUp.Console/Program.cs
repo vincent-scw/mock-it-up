@@ -1,13 +1,12 @@
 ﻿using log4net;
 using log4net.Config;
 using Microsoft.Extensions.DependencyInjection;
-using MockItUp.Common.Contracts;
+using MockItUp.Common;
 using MockItUp.Core;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace MockItUp.Console
 {
@@ -56,7 +55,7 @@ namespace MockItUp.Console
         {
             var services = new ServiceCollection();
             services.AddSingleton<HttpServer>();
-            services.AddSingleton((s) => Common.YamlSerializer.DeserializeFile<HostConfiguration>(_configPath));
+            services.AddSingleton((s) => Core.Utilities.YamlSerializer.DeserializeFile<HostConfiguration>(_configPath));
             services.AddSingleton<ISpecLoader, SpecLoader>();
             services.AddSingleton<ISpecRegistry, SpecRegistry>();
 

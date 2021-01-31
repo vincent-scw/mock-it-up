@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MockItUp.Common.Contracts
+﻿namespace MockItUp.Common
 {
     public interface IMockProvider
     {

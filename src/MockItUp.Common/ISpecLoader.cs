@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace MockItUp.Common.Contracts
+namespace MockItUp.Common
 {
     public interface ISpecLoader
     {

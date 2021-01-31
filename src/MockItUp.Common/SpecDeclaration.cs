@@ -1,4 +1,4 @@
-﻿namespace MockItUp.Common.Contracts
+﻿namespace MockItUp.Common
 {
     public class SpecDeclaration
     {

@@ -1,6 +1,6 @@
 ﻿using log4net;
 using MockItUp.Common;
-using MockItUp.Common.Contracts;
+using MockItUp.Core.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -1,12 +1,11 @@
-﻿using MockItUp.Common.Contracts;
+﻿using log4net;
+using MockItUp.Common;
 using MockItUp.Restful.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Text;
-using log4net;
 
 namespace MockItUp.Restful
 {

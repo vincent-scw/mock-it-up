@@ -1,9 +1,7 @@
-﻿using MockItUp.Common.Contracts;
+﻿using log4net;
+using MockItUp.Common;
 using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using log4net;
 
 namespace MockItUp.Core
 {

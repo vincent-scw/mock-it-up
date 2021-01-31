@@ -1,4 +1,4 @@
-﻿using MockItUp.Common.Contracts;
+﻿using MockItUp.Common;
 
 namespace MockItUp.Restful
 {

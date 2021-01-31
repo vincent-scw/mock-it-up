@@ -20,7 +20,7 @@ hosts:
                 .WithNamingConvention(UnderscoredNamingConvention.Instance)
                 .Build();
 
-            var hc = deserializer.Deserialize<Common.Contracts.HostConfiguration>(yaml);
+            var hc = deserializer.Deserialize<Common.HostConfiguration>(yaml);
             Assert.Equal("v1", hc.Version);
             Assert.Equal(2, hc.Services.Count);
         }
