@@ -1,6 +1,4 @@
-﻿using log4net;
-using MockItUp.Common;
-using System;
+﻿using MockItUp.Common;
 using System.Net;
 using System.Threading;
 
@@ -8,12 +6,10 @@ namespace MockItUp.Core
 {
     public class HttpServer
     {
-        private readonly ILog _logger;
         private readonly HostConfiguration _hostConfiguration;
         private readonly IRequestHandler _handler;
         public HttpServer(HostConfiguration hostConfiguration, IMockProvider provider)
         {
-            _logger = LogManager.GetLogger(typeof(HttpServer));
             _hostConfiguration = hostConfiguration;
             _handler = provider.RequestHandler;
         }
@@ -27,17 +23,17 @@ namespace MockItUp.Core
             {
                 var prefix = $"http://{_hostConfiguration.Host}:{v}/";
                 listener.Prefixes.Add(prefix);
-                _logger.Info($"Listen at {prefix}");
+                Logger.LogInfo($"Listen at {prefix}");
             }
 
             try
             {
                 listener.Start();
-                _logger.Info($"Start to listen...");
+                Logger.LogInfo($"Start to listen...");
             }
             catch (HttpListenerException hlex)
             {
-                _logger.Error(hlex.Message, hlex);
+                Logger.LogError(hlex.Message, hlex);
                 throw hlex;
             }
 
@@ -58,12 +54,12 @@ namespace MockItUp.Core
                     var req = ctx.Request;
 
                     //_logger.Info($"Request #: {++requestCount}");
-                    _logger.Info($"{req.HttpMethod} {req.Url}");
+                    Logger.LogInfo($"{req.HttpMethod} {req.Url}");
                     var reader = new System.IO.StreamReader(req.InputStream);
-                    _logger.Info($"Body: {reader.ReadToEnd()}");
+                    Logger.LogInfo($"Body: {reader.ReadToEnd()}");
 
                     await _handler.HandleAsync(ctx);
-                    _logger.Info($"Completed.");
+                    Logger.LogInfo($"Completed.");
                 });
 #pragma warning restore 4014
             }

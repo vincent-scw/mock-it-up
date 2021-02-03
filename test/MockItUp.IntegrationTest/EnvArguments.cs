@@ -8,10 +8,7 @@ namespace MockItUp.IntegrationTest
     {
         public static string GetServiceUrl(string serviceName)
         {
-            if (serviceName == "order")
-                return "http://localhost:5000";
-            else
-                return "http://localhost:5010";
+            return Environment.GetEnvironmentVariable($"SERVICE_{serviceName.ToUpper()}");
         }
     }
 }

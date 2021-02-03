@@ -9,8 +9,6 @@ namespace MockItUp.Core
 {
     public class SpecLoader : ISpecLoader
     {
-        private readonly ILog _log = LogManager.GetLogger(typeof(SpecLoader));
-
         public SpecDeclaration Load(string content)
         {
             var model = YamlSerializer.Deserialize<SpecDeclaration>(content);
@@ -41,7 +39,7 @@ namespace MockItUp.Core
                 }
                 catch (Exception ex)
                 {
-                    _log.Error($"Load spec error: {ex.Message}", ex);
+                    Logger.LogError($"Load spec error: {ex.Message}", ex);
                     throw ex;
                 }
             }

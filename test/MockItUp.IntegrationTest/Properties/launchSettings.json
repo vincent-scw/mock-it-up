@@ -7,6 +7,9 @@
         "SERVICE_SHIPMENT": "http://localhost:5010/"
       },
       "sqlDebugging": true
+    },
+    "Docker": {
+      "commandName": "Docker"
     }
   }
 }

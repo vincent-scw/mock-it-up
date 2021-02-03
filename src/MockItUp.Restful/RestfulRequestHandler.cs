@@ -17,7 +17,7 @@ namespace MockItUp.Restful
         private readonly IReadOnlyDictionary<string, IList<RuleItem>> _items;
         private readonly IDictionary<string, int> _hosts;
         private readonly ResponseResolver _resolver;
-        private readonly ILog _log;
+
         public RestfulRequestHandler(ISpecRegistry registry,
             ResponseResolver resolver,
             HostConfiguration hostConfiguration)
@@ -25,7 +25,6 @@ namespace MockItUp.Restful
             _items = BuildItemDictionary(registry.GetSpecs("restful"));
             _hosts = hostConfiguration.Services;
             _resolver = resolver;
-            _log = LogManager.GetLogger(typeof(RestfulRequestHandler));
         }
 
         public async Task HandleAsync(HttpListenerContext context)
@@ -61,7 +60,7 @@ namespace MockItUp.Restful
 
                 await resp.OutputStream.WriteAsync(data, 0, data.Length);
 
-                _log.Error(ex.Message, ex);
+                Logger.LogError(ex.Message, ex);
             }
             finally
             {

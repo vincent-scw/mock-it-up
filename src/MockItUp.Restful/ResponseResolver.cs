@@ -1,4 +1,5 @@
-﻿using MockItUp.Restful.Models;
+﻿using MockItUp.Common;
+using MockItUp.Restful.Models;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -13,7 +14,13 @@ namespace MockItUp.Restful
             resp.StatusCode = responseModel.StatusCode;
             resp.ContentType = responseModel.ContentType;
 
+            // No body, return
+            if (string.IsNullOrEmpty(responseModel.Body))
+                return;
+
             var body = ResolveBody(responseModel);
+            Logger.LogInfo($"Response body: {body}");
+
             byte[] data = Encoding.UTF8.GetBytes(body);
             resp.ContentEncoding = Encoding.UTF8;
             resp.ContentLength64 = data.LongLength;

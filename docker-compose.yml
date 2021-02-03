@@ -12,3 +12,13 @@ services:
       - 5010:5010
     volumes:
       - ./test/MockItUp.IntegrationTest/mockitup.d:/etc/mockitup.d
+      
+  integrationtest:
+    build:
+      context: ./test
+      dockerfile: MockItUp.IntegrationTest/Dockerfile
+    environment:
+      - SERVICE_ORDER=http://mockserver:5000
+      - SERVICE_SHIPMENT=http://mockserver:5010
+    depends_on:
+      - mockserver

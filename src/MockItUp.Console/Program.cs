@@ -26,7 +26,7 @@ namespace MockItUp.Console
 
             _configPath = args.Length > 0 ? args[0] : Environment.GetEnvironmentVariable("SETTING_FILE");
 
-            log.Info($"Load settings from {_configPath}");
+            Logger.LogInfo($"Load settings from {_configPath}");
 
             try
             {
@@ -43,7 +43,7 @@ namespace MockItUp.Console
             }
             catch(Exception ex)
             {
-                log.Error(ex.Message, ex);
+                Logger.LogError(ex.Message, ex);
             }
             finally
             {
