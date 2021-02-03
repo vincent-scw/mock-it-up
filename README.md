@@ -1,8 +1,8 @@
 # mock-it-up
-Mock It Up is a mock server via configuration files.
+***Mock It Up*** is a mock server via configuration files.
 
 ## Config the mock server
-When start, Mock It Up reads settings via configuration file. Please ref to [config.yml](https://github.com/vincent-scw/mock-it-up/blob/main/test/MockItUp.IntegrationTest/mockitup.d/conf.yml)
+When start, ***Mock It Up*** reads settings via configuration file. Please ref to [config.yml](https://github.com/vincent-scw/mock-it-up/blob/main/test/MockItUp.IntegrationTest/mockitup.d/conf.yml)
 | Property | Required? | Avaliable Options   | Notes                                                                    |
 |----------|-----------|---------------------|--------------------------------------------------------------------------|
 | host     | optional  |                     | Default: &ast;. (use 'localhost' in Windows for debugging)                   |
@@ -46,4 +46,4 @@ rules:
 | headers    | optional  |                   | A dictionary of http headers                                     |
 
 ## Run test
-1. Use ```docker-compose```. It will run both mock server and tests.
+* Use ```docker-compose```. It will run both mock server and tests.
