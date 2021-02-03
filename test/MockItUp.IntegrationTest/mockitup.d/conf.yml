@@ -1,5 +1,6 @@
 ﻿version: v1
 specDirectory: /etc/mockitup.d/specs/
+payloadDirectory: /etc/mockitup.d/payloads/
 services:
   order: 5000
   shipment: 5010

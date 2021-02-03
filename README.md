@@ -2,7 +2,14 @@
 Mock It Up is a mock server via configuration files.
 
 ## Config the mock server
-Mock It Up reads configuration files (called 'Spec') when start.
+When start, Mock It Up reads settings via configuration file. Please ref to [config.yml](https://github.com/vincent-scw/mock-it-up/blob/main/test/MockItUp.IntegrationTest/mockitup.d/conf.yml)
+| Property | Required? | Avaliable Options   | Notes                                                                    |
+|----------|-----------|---------------------|--------------------------------------------------------------------------|
+| host     | optional  |                     | Default: &ast;. (use 'localhost' in Windows for debugging)                   |
+| specDirectory | required  |                | The url path to spec directory |
+| payloadDirectory | optional  |             | The url path to payload (definition of response bodies) directory |
+
+Mock It Up reads **Spec** to setup rules for *request* and expected *response*.
 The Spec is a ```yaml``` file looks like
 ```yml
 version: v1
@@ -12,7 +19,7 @@ rules:
       method: get
       path: api/orders/{id}
     response:
-      body: /etc/mockitup.d/payloads/order.json
+      body: order.json
       delay: 100
   - request:
       method: put
@@ -21,13 +28,13 @@ rules:
       statusCode: 201
 ```
 
-You can add ```rules``` to setup inputs ```request``` and expected result ```response```.
+```rules``` should include *request* (condition) and *response* (expectation).
 
 ```request``` properties includes:
 | Property | Required? | Avaliable Options   | Notes                                                                    |
 |----------|-----------|---------------------|--------------------------------------------------------------------------|
 | method   | required  | get/post/put/delete | Http method.                                                             |
-| path     | required  |                     | The Url path template of http request. The template follows [HTML RFC6570](https://tools.ietf.org/html/rfc6570) |
+| path     | required  |                     | The url path template of http request. The template follows [HTML RFC6570](https://tools.ietf.org/html/rfc6570) |
 | headers  | optional  |                     | A dictionary of http headers                                             |
 
 ```response``` properties includes:
@@ -39,4 +46,4 @@ You can add ```rules``` to setup inputs ```request``` and expected result ```res
 | headers    | optional  |                   | A dictionary of http headers                                     |
 
 ## Run test
-1. Use ```docker-compose```. It will run both the mock server and tests.
+1. Use ```docker-compose```. It will run both mock server and tests.

@@ -24,5 +24,9 @@ namespace MockItUp.Common
         /// The directory for spec files
         /// </summary>
         public string SpecDirectory { get; set; }
+        /// <summary>
+        /// The directory for payload files
+        /// </summary>
+        public string PayloadDirectory { get; set; }
     }
 }

@@ -5,7 +5,7 @@ rules:
       method: get
       path: api/shipments/{id}
     response:
-      body: /etc/mockitup.d/payloads/shipment.json
+      body: shipment.json
       delay: 100
   - request:
       method: put

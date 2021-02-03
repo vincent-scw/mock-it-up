@@ -15,7 +15,7 @@ namespace MockItUp.Restful
         private const string WILDCARD = "*";
 
         private readonly IReadOnlyDictionary<string, IList<RuleItem>> _items;
-        private readonly IDictionary<string, int> _hosts;
+        private readonly HostConfiguration _hostConfiguration;
         private readonly ResponseResolver _resolver;
 
         public RestfulRequestHandler(ISpecRegistry registry,
@@ -23,7 +23,7 @@ namespace MockItUp.Restful
             HostConfiguration hostConfiguration)
         {
             _items = BuildItemDictionary(registry.GetSpecs("restful"));
-            _hosts = hostConfiguration.Services;
+            _hostConfiguration = hostConfiguration;
             _resolver = resolver;
         }
 
@@ -32,7 +32,7 @@ namespace MockItUp.Restful
             var resp = context.Response;
             try
             {
-                var host = _hosts.FirstOrDefault(kv => kv.Value == context.Request.Url.Port);
+                var host = _hostConfiguration.Services.FirstOrDefault(kv => kv.Value == context.Request.Url.Port);
                 if (host.Key == null)
                     throw new NotSupportedException($"Cannot handle request {context.Request.Url}. Host not found.");
 
@@ -49,7 +49,7 @@ namespace MockItUp.Restful
                     System.Threading.Thread.Sleep(matched.Response.Delay);
                 }
 
-                await _resolver.Resolve(context.Response, matched.Response);
+                await _resolver.Resolve(context.Response, matched.Response, _hostConfiguration);
             }
             catch (Exception ex)
             {
