@@ -9,8 +9,8 @@ When start, ***Mock It Up*** reads settings via configuration file. Please ref t
 | specDirectory | required  |                | The url path to spec directory |
 | payloadDirectory | optional  |             | The url path to payload (definition of response bodies) directory |
 
-Mock It Up reads **Spec** to setup rules for *request* and expected *response*.
-The Spec is a ```yaml``` file looks like
+***Mock It Up*** reads **Spec** to setup rules for *request* and expected *response*.
+The **Spec** is a ```yaml``` file looks like
 ```yml
 version: v1
 type: restful
