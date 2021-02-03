@@ -1,5 +1,6 @@
 ﻿using log4net;
 using MockItUp.Common;
+using System;
 using System.Net;
 using System.Threading;
 
@@ -62,7 +63,6 @@ namespace MockItUp.Core
                     _logger.Info($"Body: {reader.ReadToEnd()}");
 
                     await _handler.HandleAsync(ctx);
-
                     _logger.Info($"Completed.");
                 });
 #pragma warning restore 4014

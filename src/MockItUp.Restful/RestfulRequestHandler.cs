@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MockItUp.Restful
@@ -29,27 +30,43 @@ namespace MockItUp.Restful
 
         public async Task HandleAsync(HttpListenerContext context)
         {
-            var host = _hosts.FirstOrDefault(kv => kv.Value == context.Request.Url.Port);
-            if (host.Key == null)
-                throw new NotSupportedException($"Cannot handle request {context.Request.Url}. Host not found.");
-
-            var candidates = _items.ContainsKey(host.Key) ?
-                _items[host.Key] :
-                _items.SelectMany(x => x.Value);
-
-            var matched = candidates.FirstOrDefault(d => d.Match(context.Request.HttpMethod, context.Request.Url) != null);
-            if (matched == null)
-                throw new NotSupportedException($"Cannot find matched rule. Request ignored.");
-
-            if (matched.Response.Delay > 0)
-            {
-                System.Threading.Thread.Sleep(matched.Response.Delay);
-            }
-
             var resp = context.Response;
-            await _resolver.Resolve(resp, matched.Response);
+            try
+            {
+                var host = _hosts.FirstOrDefault(kv => kv.Value == context.Request.Url.Port);
+                if (host.Key == null)
+                    throw new NotSupportedException($"Cannot handle request {context.Request.Url}. Host not found.");
 
-            resp.Close();
+                var candidates = _items.ContainsKey(host.Key) ?
+                    _items[host.Key] :
+                    _items.SelectMany(x => x.Value);
+
+                var matched = candidates.FirstOrDefault(d => d.Match(context.Request.HttpMethod, context.Request.Url) != null);
+                if (matched == null)
+                    throw new NotSupportedException($"Cannot find matched rule. Request ignored.");
+
+                if (matched.Response.Delay > 0)
+                {
+                    System.Threading.Thread.Sleep(matched.Response.Delay);
+                }
+
+                await _resolver.Resolve(context.Response, matched.Response);
+            }
+            catch (Exception ex)
+            {
+                resp.StatusCode = (int) HttpStatusCode.BadRequest;
+                byte[] data = Encoding.UTF8.GetBytes(ex.Message);
+                resp.ContentEncoding = Encoding.UTF8;
+                resp.ContentLength64 = data.LongLength;
+
+                await resp.OutputStream.WriteAsync(data, 0, data.Length);
+
+                _log.Error(ex.Message, ex);
+            }
+            finally
+            {
+                resp.Close();
+            }
         }
 
         private static IReadOnlyDictionary<string, IList<RuleItem>> BuildItemDictionary(IReadOnlyCollection<SpecDeclaration> specs) 
