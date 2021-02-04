@@ -55,10 +55,10 @@ rules:
 | bodyType   | optional  | direct/file/auto  | Default: auto                                                    |
 | headers    | optional  |                   | A dictionary of http headers                                     |
 
-### ```variable``` will be replaced in response body. Here is the list for variables you can use in body.
+Rather than static response body, you can also use ```variable```. 
 | Object     | VariableName      | Request Example         | Usage                   | Replaced with                       |
 |------------|-------------------|-------------------------|-------------------------|-------------------------------------|
-| url path   | p/path            | url ```http://localhost/api/values/1000``` |```${p.id}```, ```${path.id}```| 1000            |
+| url path   | p/path            | url ```http://localhost/api/values/1000``` |${p.id}, ${path.id}| 1000            |
 | request body | b/body          | body ```{ "customer": {"id": "C100", name: "somebody" }}``` | ${b.customer.id} | C100        |
 | request header | h/header/headers | header ```Accept:application/json``` | ${h.accept} | application/json |
 
