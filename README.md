@@ -1,6 +1,11 @@
 # mock-it-up
 ***Mock It Up*** is a mock server via configuration files.
 
+
+```docker 
+docker pull edentidus/mockitup
+```
+
 ## Config the mock server
 When start, ***Mock It Up*** reads settings via configuration file. Please ref to [config.yml](https://github.com/vincent-scw/mock-it-up/blob/main/test/MockItUp.IntegrationTest/mockitup.d/conf.yml)
 | Property | Required? | Avaliable Options   | Notes                                                                    |
@@ -46,4 +51,4 @@ rules:
 | headers    | optional  |                   | A dictionary of http headers                                     |
 
 ## Run test
-* Use ```docker-compose```. It will run both mock server and tests.
+* docker-compose: ```docker-compose up --abort-on-container-exit --exit-code-from integrationtest```
