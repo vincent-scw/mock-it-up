@@ -1,7 +1,7 @@
-﻿using MockItUp.Core.Utilities;
+﻿using MockItUp.Common.Utilities;
 using Xunit;
 
-namespace MockItUp.Core.Tests
+namespace MockItUp.UnitTest.Core
 {
     public class SmartFormatterTest
     {

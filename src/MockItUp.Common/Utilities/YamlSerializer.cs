@@ -2,7 +2,7 @@
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace MockItUp.Core.Utilities
+namespace MockItUp.Common.Utilities
 {
     public sealed class YamlSerializer
     {

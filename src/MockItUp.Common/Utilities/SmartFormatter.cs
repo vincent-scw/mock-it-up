@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MockItUp.Core.Utilities
+namespace MockItUp.Common.Utilities
 {
     public static class SmartFormatter
     {
@@ -20,7 +20,7 @@ namespace MockItUp.Core.Utilities
                     
                     if (c == '}')
                     {
-                        var placeHolder = queue.ToArray().ToString();
+                        var placeHolder = new string(queue.ToArray());
                         sb.Append(resolvePlaceHolder(placeHolder));
                         queue.Clear();
                     }

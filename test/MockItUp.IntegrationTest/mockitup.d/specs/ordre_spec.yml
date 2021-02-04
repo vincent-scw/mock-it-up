@@ -12,3 +12,8 @@ rules:
       path: api/orders
     response:
       statusCode: 201
+      body: |
+        {
+            "id": 1000,
+            "customerId": "${b.customer.id}"
+        }

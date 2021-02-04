@@ -1,5 +1,5 @@
 {
-	"orderId": 10000,
+	"orderId": ${p.id},
 	"customerId": "C123",
 	"shipped": true,
 	"shipmentId": "SH20210101LA"

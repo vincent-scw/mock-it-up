@@ -55,7 +55,7 @@ namespace MockItUp.Console
         {
             var services = new ServiceCollection();
             services.AddSingleton<HttpServer>();
-            services.AddSingleton((s) => Core.Utilities.YamlSerializer.DeserializeFile<HostConfiguration>(_configPath));
+            services.AddSingleton((s) => Common.Utilities.YamlSerializer.DeserializeFile<HostConfiguration>(_configPath));
             services.AddSingleton<ISpecLoader, SpecLoader>();
             services.AddSingleton<ISpecRegistry, SpecRegistry>();
 

@@ -1,5 +1,5 @@
 {
-	"shipmentId": "SH20210101LA",
+	"shipmentId": "${p.id}",
 	"routing": [
 		{ 
 			"code":"CNSHA",

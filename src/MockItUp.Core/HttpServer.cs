@@ -51,15 +51,8 @@ namespace MockItUp.Core
                     sem.Release();
 
                     var ctx = await t;
-                    var req = ctx.Request;
-
-                    //_logger.Info($"Request #: {++requestCount}");
-                    Logger.LogInfo($"{req.HttpMethod} {req.Url}");
-                    var reader = new System.IO.StreamReader(req.InputStream);
-                    Logger.LogInfo($"Body: {reader.ReadToEnd()}");
 
                     await _handler.HandleAsync(ctx);
-                    Logger.LogInfo($"Completed.");
                 });
 #pragma warning restore 4014
             }

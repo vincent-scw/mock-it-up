@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -25,11 +27,26 @@ namespace MockItUp.IntegrationTest
             var httpClient = new HttpClient();
 
             // Create order
-            var response = await httpClient.PutAsync($"{_orderUrl}/orders", new StringContent("{orderId: 10000}"));
+            var response = await httpClient.PutAsync($"{_orderUrl}/orders",
+                new StringContent(JsonConvert.SerializeObject(new
+                {
+                    customer = new
+                    {
+                        id = "C100",
+                        name = "somebody"
+                    }
+                })));
+            var responseRead = await ReadResponseAsync<dynamic>(response.Content);
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+            Assert.Equal("C100", (string)responseRead.customerId);
 
             // Create shipment
-            response = await httpClient.PutAsync($"{_shipmentUrl}/shipments", new StringContent("{orderId: 10000, from:\"CNSHA\", to:\"LA\"}"));
+            response = await httpClient.PutAsync($"{_shipmentUrl}/shipments",
+                new StringContent(JsonConvert.SerializeObject(new 
+                { 
+                    shipmentId, 
+                    routing = new string[] { "CNSHA", "KRPUS", "USLAX" } 
+                })));
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
 
             // Get order
@@ -38,17 +55,17 @@ namespace MockItUp.IntegrationTest
 
             var order = await ReadResponseAsync<dynamic>(response.Content);
             Assert.Equal(10000, (int) order.orderId);
-            Assert.Equal(shipmentId, (string) order.shipmentId);
+            Assert.Equal(shipmentId, (string)order.shipmentId);
 
             response = await httpClient.GetAsync($"{_shipmentUrl}/shipments/{shipmentId}");
             var shipment = await ReadResponseAsync<dynamic>(response.Content);
-            Assert.Equal(shipmentId, (string) shipment.shipmentId);
+            Assert.Equal(shipmentId, (string)shipment.shipmentId);
         }
 
         private async Task<T> ReadResponseAsync<T>(HttpContent httpContent)
         {
             var str = await httpContent.ReadAsStringAsync();
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(str);
+            return JsonConvert.DeserializeObject<T>(str);
         }
     }
 }

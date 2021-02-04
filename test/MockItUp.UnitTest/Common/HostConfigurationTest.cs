@@ -2,7 +2,7 @@ using Xunit;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace MockItUp.Core.Tests
+namespace MockItUp.UnitTest.Core
 {
     public class HostConfigurationTest
     {

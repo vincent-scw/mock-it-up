@@ -29,7 +29,14 @@ namespace MockItUp.Restful
 
         public async Task HandleAsync(HttpListenerContext context)
         {
+            var req = context.Request;
             var resp = context.Response;
+
+            Logger.LogInfo($"{req.HttpMethod} {req.Url}");
+            var reader = new System.IO.StreamReader(req.InputStream);
+            var bodyStr = reader.ReadToEnd();
+            Logger.LogInfo($"Body: {bodyStr}");
+
             try
             {
                 var host = _hostConfiguration.Services.FirstOrDefault(kv => kv.Value == context.Request.Url.Port);
@@ -40,16 +47,23 @@ namespace MockItUp.Restful
                     _items[host.Key] :
                     _items.SelectMany(x => x.Value);
 
-                var matched = candidates.FirstOrDefault(d => d.Match(context.Request.HttpMethod, context.Request.Url) != null);
-                if (matched == null)
+                RuleItem matchedItem = null;
+                UriTemplate.Core.UriTemplateMatch match = null;
+                foreach (var c in candidates)
+                {
+                    match = c.Match(context.Request.HttpMethod, context.Request.Url);
+                    if (match != null)
+                    {
+                        matchedItem = c;
+                        break;
+                    }
+                }
+                if (matchedItem == null)
                     throw new NotSupportedException($"Cannot find matched rule. Request ignored.");
 
-                if (matched.Response.Delay > 0)
-                {
-                    System.Threading.Thread.Sleep(matched.Response.Delay);
-                }
+                var requestDict = new RequestDictionaryBuilder().Build(context.Request, match, bodyStr);
 
-                await _resolver.Resolve(context.Response, matched.Response, _hostConfiguration);
+                await _resolver.Resolve(context.Response, matchedItem.Response, requestDict);
             }
             catch (Exception ex)
             {

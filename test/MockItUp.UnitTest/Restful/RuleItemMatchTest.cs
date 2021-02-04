@@ -2,7 +2,7 @@
 using System;
 using Xunit;
 
-namespace MockItUp.Restful.Tests
+namespace MockItUp.UnitTest.Restful
 {
     public class RuleItemMatchTest
     {

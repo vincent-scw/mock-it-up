@@ -12,3 +12,11 @@ rules:
       path: api/shipments
     response:
       statusCode: 201
+      body: |
+        {
+          "shipment": {
+            "id": "${b.shipmentId}",
+            "createdAt": "2021-02-04",
+            "routing": ${b.routing}
+          }
+        }
