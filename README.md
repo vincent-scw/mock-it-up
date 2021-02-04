@@ -1,5 +1,5 @@
 # mock-it-up
-***Mock It Up*** is a mock server via configuration files.
+***Mock It Up*** is a mock server for testing purpose. It reads configuration files to setup rules of http request/response.
 
 
 ```docker 
