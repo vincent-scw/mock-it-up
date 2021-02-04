@@ -31,6 +31,11 @@ rules:
       path: api/orders
     response:
       statusCode: 201
+      body: |
+        {
+            "id": 1000,
+            "customerId": "${b.customer.id}"
+        }
 ```
 
 ```rules``` should include *request* (condition) and *response* (expectation).
@@ -49,6 +54,15 @@ rules:
 | body       | optional  | string/file path  | The body of http response. It can be direct string or file path. |
 | bodyType   | optional  | direct/file/auto  | Default: auto                                                    |
 | headers    | optional  |                   | A dictionary of http headers                                     |
+
+### ```variable``` will be replaced in response body. Here is the list for variables you can use in body.
+| Object     | VariableName      | Request Example         | Usage                   | Replaced with                       |
+|------------|-------------------|-------------------------|-------------------------|-------------------------------------|
+| url path   | p/path            | url ```http://localhost/api/values/1000``` |```${p.id}```, ```${path.id}```| 1000            |
+| request body | b/body          | body ```{ "customer": {"id": "C100", name: "somebody" }}``` | ${b.customer.id} | C100        |
+| request header | h/header/headers | header ```Accept:application/json``` | ${h.accept} | application/json |
+
+Please reference to [test](https://github.com/vincent-scw/mock-it-up/blob/main/test/MockItUp.IntegrationTest/mockitup.d) for some examples.
 
 ## Run test
 * docker-compose: ```docker-compose up --abort-on-container-exit --exit-code-from integrationtest```
