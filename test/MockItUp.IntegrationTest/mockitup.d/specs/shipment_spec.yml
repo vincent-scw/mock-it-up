@@ -1,5 +1,4 @@
 version: v1
-type: restful
 rules:
   - request:
       method: get

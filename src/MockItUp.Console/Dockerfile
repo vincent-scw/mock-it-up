@@ -6,7 +6,6 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["MockItUp.Console/MockItUp.Console.csproj", "MockItUp.Console/"]
-COPY ["MockItUp.Restful/MockItUp.Restful.csproj", "MockItUp.Restful/"]
 COPY ["MockItUp.Common/MockItUp.Common.csproj", "MockItUp.Common/"]
 COPY ["MockItUp.Core/MockItUp.Core.csproj", "MockItUp.Core/"]
 RUN dotnet restore "MockItUp.Console/MockItUp.Console.csproj"

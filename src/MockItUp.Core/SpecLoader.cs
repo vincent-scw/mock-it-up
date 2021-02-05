@@ -1,5 +1,4 @@
-﻿using log4net;
-using MockItUp.Common;
+﻿using MockItUp.Common;
 using MockItUp.Common.Utilities;
 using MockItUp.Core.Contracts;
 using System;
@@ -12,14 +11,7 @@ namespace MockItUp.Core
     {
         public SpecDeclaration Load(string content)
         {
-            var model = YamlSerializer.Deserialize<SpecDeclaration>(content);
-            switch (model.Type.ToLower())
-            {
-                case "restful":
-                    return YamlSerializer.Deserialize<Core.Models.RestfulSpecDeclaration>(content);
-                default:
-                    throw new NotSupportedException($"Spec type {model.Type.ToLower()} is not supported.");
-            }
+            return YamlSerializer.Deserialize<Models.RestfulSpecDeclaration>(content);
         }
 
         public IList<SpecDeclaration> LoadDirectory(string directoryPath)

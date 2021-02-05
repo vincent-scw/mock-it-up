@@ -4,9 +4,8 @@ namespace MockItUp.Core.Contracts
 {
     public interface ISpecRegistry
     {
-        IDictionary<string, IReadOnlyCollection<SpecDeclaration>> GroupedSpecs { get; }
+        IList<SpecDeclaration> Specs { get; }
 
-        IReadOnlyCollection<SpecDeclaration> GetSpecs(string type);
         void RegisterDirectory(string path);
     }
 }

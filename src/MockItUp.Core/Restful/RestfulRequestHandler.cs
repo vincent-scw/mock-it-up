@@ -22,7 +22,7 @@ namespace MockItUp.Core.Restful
             ResponseResolver resolver,
             HostConfiguration hostConfiguration)
         {
-            _items = BuildItemDictionary(registry.GetSpecs("restful"));
+            _items = BuildItemDictionary(registry.Specs);
             _hostConfiguration = hostConfiguration;
             _resolver = resolver;
         }
@@ -82,7 +82,7 @@ namespace MockItUp.Core.Restful
             }
         }
 
-        private static IReadOnlyDictionary<string, IList<RuleItem>> BuildItemDictionary(IReadOnlyCollection<SpecDeclaration> specs) 
+        private static IReadOnlyDictionary<string, IList<RuleItem>> BuildItemDictionary(IList<SpecDeclaration> specs) 
         {
             var ret = new Dictionary<string, IList<RuleItem>>();
             foreach (RestfulSpecDeclaration spec in specs)
