@@ -1,6 +1,6 @@
-﻿using log4net;
-using MockItUp.Common;
-using MockItUp.Restful.Models;
+﻿using MockItUp.Common;
+using MockItUp.Core.Contracts;
+using MockItUp.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MockItUp.Restful
+namespace MockItUp.Core.Restful
 {
     public class RestfulRequestHandler : IRequestHandler
     {

@@ -1,8 +1,8 @@
-﻿using MockItUp.Restful.Models;
+﻿using MockItUp.Core.Models;
 using System;
 using Xunit;
 
-namespace MockItUp.UnitTest.Restful
+namespace MockItUp.UnitTest.Core
 {
     public class RuleItemMatchTest
     {

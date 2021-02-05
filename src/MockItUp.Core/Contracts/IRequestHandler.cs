@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace MockItUp.Common
+namespace MockItUp.Core.Contracts
 {
     public interface IRequestHandler
     {

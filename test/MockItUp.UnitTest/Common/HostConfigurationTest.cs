@@ -1,3 +1,4 @@
+using MockItUp.Core.Models;
 using Xunit;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -20,7 +21,7 @@ hosts:
                 .WithNamingConvention(UnderscoredNamingConvention.Instance)
                 .Build();
 
-            var hc = deserializer.Deserialize<Common.HostConfiguration>(yaml);
+            var hc = deserializer.Deserialize<HostConfiguration>(yaml);
             Assert.Equal("v1", hc.Version);
             Assert.Equal(2, hc.Services.Count);
         }

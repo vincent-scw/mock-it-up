@@ -16,11 +16,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\MockItUp.Common\MockItUp.Common.csproj" />
     <ProjectReference Include="..\..\src\MockItUp.Core\MockItUp.Core.csproj" />
-    <ProjectReference Include="..\..\src\MockItUp.Restful\MockItUp.Restful.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Core\" />
   </ItemGroup>
 
 </Project>

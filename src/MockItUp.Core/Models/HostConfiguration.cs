@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MockItUp.Common
+namespace MockItUp.Core.Models
 {
     public class HostConfiguration
     {

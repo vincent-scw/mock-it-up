@@ -1,7 +1,7 @@
 ﻿using System;
 using UriTemplate.Core;
 
-namespace MockItUp.Restful.Models
+namespace MockItUp.Core.Models
 {
     public class RuleItem
     {

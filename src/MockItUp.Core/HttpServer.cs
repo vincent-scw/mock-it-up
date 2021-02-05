@@ -1,4 +1,6 @@
 ﻿using MockItUp.Common;
+using MockItUp.Core.Contracts;
+using MockItUp.Core.Models;
 using System.Net;
 using System.Threading;
 

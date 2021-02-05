@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MockItUp.Core\MockItUp.Core.csproj" />
-    <ProjectReference Include="..\MockItUp.Restful\MockItUp.Restful.csproj" />
   </ItemGroup>
 
   <ItemGroup>

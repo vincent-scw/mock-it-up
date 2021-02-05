@@ -1,4 +1,5 @@
 ﻿using MockItUp.Common;
+using MockItUp.Core.Contracts;
 using System.Collections.Generic;
 using System.Linq;
 

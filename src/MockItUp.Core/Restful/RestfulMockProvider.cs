@@ -1,6 +1,8 @@
 ﻿using MockItUp.Common;
+using MockItUp.Core.Contracts;
+using MockItUp.Core.Models;
 
-namespace MockItUp.Restful
+namespace MockItUp.Core.Restful
 {
     public class RestfulMockProvider : IMockProvider
     {
@@ -9,7 +11,6 @@ namespace MockItUp.Restful
             RequestHandler = new RestfulRequestHandler(registry, new ResponseResolver(hostConfiguration), hostConfiguration);
         }
 
-        public MockTypeEnum MockType => MockTypeEnum.Restful;
         public IRequestHandler RequestHandler { get; }
     }
 }

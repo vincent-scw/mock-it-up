@@ -1,6 +1,6 @@
 ﻿using MockItUp.Common;
 using MockItUp.Common.Utilities;
-using MockItUp.Restful.Models;
+using MockItUp.Core.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MockItUp.Restful
+namespace MockItUp.Core.Restful
 {
     public class ResponseResolver
     {

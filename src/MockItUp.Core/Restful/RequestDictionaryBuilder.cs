@@ -1,16 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Dynamic;
-using System.Linq;
 using System.Net;
-using System.Text;
 using UriTemplate.Core;
 
-namespace MockItUp.Restful
+namespace MockItUp.Core.Restful
 {
     internal class RequestDictionaryBuilder
     {

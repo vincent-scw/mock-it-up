@@ -1,4 +1,4 @@
-﻿namespace MockItUp.Common
+﻿namespace MockItUp.Core
 {
     public class SpecDeclaration
     {

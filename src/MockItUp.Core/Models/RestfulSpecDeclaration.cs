@@ -1,7 +1,7 @@
 ﻿using MockItUp.Common;
 using System.Collections.Generic;
 
-namespace MockItUp.Restful.Models
+namespace MockItUp.Core.Models
 {
     public class RestfulSpecDeclaration : SpecDeclaration
     {

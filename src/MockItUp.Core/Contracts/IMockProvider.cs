@@ -1,8 +1,7 @@
-﻿namespace MockItUp.Common
+﻿namespace MockItUp.Core.Contracts
 {
     public interface IMockProvider
     {
-        MockTypeEnum MockType { get; }
         IRequestHandler RequestHandler { get; }
     }
 }

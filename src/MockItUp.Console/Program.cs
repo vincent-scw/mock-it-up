@@ -3,6 +3,8 @@ using log4net.Config;
 using Microsoft.Extensions.DependencyInjection;
 using MockItUp.Common;
 using MockItUp.Core;
+using MockItUp.Core.Contracts;
+using MockItUp.Core.Models;
 using System;
 using System.IO;
 using System.Reflection;
@@ -59,7 +61,7 @@ namespace MockItUp.Console
             services.AddSingleton<ISpecLoader, SpecLoader>();
             services.AddSingleton<ISpecRegistry, SpecRegistry>();
 
-            services.AddSingleton<IMockProvider, Restful.RestfulMockProvider>();
+            services.AddSingleton<IMockProvider, Core.Restful.RestfulMockProvider>();
 
             _serviceProvider = services.BuildServiceProvider(true);
         }
