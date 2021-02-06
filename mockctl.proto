@@ -1,0 +1,27 @@
+// The mock controller service definition
+service MockController {
+	// Register a dynamic stub to mock server
+	rpc RegisterDynamicStub (DynamicStub) returns (RegisterResult) {}
+}
+
+// A dynamic stub for http request and response
+message DynamicStub {
+	required Request request = 1;
+	required Response respone = 2;
+}
+
+// Http request definition
+message Request {
+	required string method = 1;
+	required string urlTemplate = 2;
+}
+
+// Http response definition
+message Response {
+	required int32 statusCode = 1;
+	optional string body = 2;
+}
+
+message RegisterResult {
+	required string stubID = 1;
+}

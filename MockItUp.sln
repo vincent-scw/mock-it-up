@@ -17,6 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockItUp.IntegrationTest", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockItUp.UnitTest", "test\MockItUp.UnitTest\MockItUp.UnitTest.csproj", "{9F1B7DA4-BBC9-45D2-9534-99E48EB3AD83}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockItUp.Client", "src\MockItUp.Client\MockItUp.Client.csproj", "{7E95F0C3-C56E-4D78-BD5F-D0CFD3ADA3A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFiles", "SolutionFiles", "{263F832B-C85A-413C-93D3-180EA462B40B}"
+	ProjectSection(SolutionItems) = preProject
+		mockctl.proto = mockctl.proto
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +50,10 @@ Global
 		{9F1B7DA4-BBC9-45D2-9534-99E48EB3AD83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F1B7DA4-BBC9-45D2-9534-99E48EB3AD83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F1B7DA4-BBC9-45D2-9534-99E48EB3AD83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E95F0C3-C56E-4D78-BD5F-D0CFD3ADA3A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E95F0C3-C56E-4D78-BD5F-D0CFD3ADA3A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E95F0C3-C56E-4D78-BD5F-D0CFD3ADA3A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E95F0C3-C56E-4D78-BD5F-D0CFD3ADA3A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +64,7 @@ Global
 		{96AA9FED-4506-460E-B2FF-1087005443CD} = {3E2D4ACA-F301-48AE-8083-32C5EA9EBEC1}
 		{B8B54AB9-223C-451A-8F05-E78504FDC996} = {8F00B7E8-13E3-4C4A-BA17-9A5C1BF7F25B}
 		{9F1B7DA4-BBC9-45D2-9534-99E48EB3AD83} = {8F00B7E8-13E3-4C4A-BA17-9A5C1BF7F25B}
+		{7E95F0C3-C56E-4D78-BD5F-D0CFD3ADA3A2} = {3E2D4ACA-F301-48AE-8083-32C5EA9EBEC1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4E447407-4027-4944-8FF0-25742F9E8BE3}

@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using Grpc.Core;
+using log4net;
 using log4net.Config;
 using Microsoft.Extensions.DependencyInjection;
 using MockItUp.Common;
@@ -30,18 +31,14 @@ namespace MockItUp.Console
 
             Logger.LogInfo($"Load settings from {_configPath}");
 
+            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
+
             try
-            {
-                var hostConfig = _serviceProvider.GetService<HostConfiguration>();
-                var registry = _serviceProvider.GetService<ISpecRegistry>();
-                registry.RegisterDirectory(hostConfig.SpecDirectory);
+            {                
+                StartRestfulServer(cancellationToken);
 
-                var httpServer = _serviceProvider.GetService<HttpServer>();
-                var cancellationTokenSource = new CancellationTokenSource();
-                var cancellationToken = cancellationTokenSource.Token;
-                httpServer.Start(cancellationToken);
-
-                cancellationTokenSource.Cancel();
+                // cancellationTokenSource.Cancel();
             }
             catch(Exception ex)
             {
@@ -75,6 +72,27 @@ namespace MockItUp.Console
             {
                 ((IDisposable)_serviceProvider).Dispose();
             }
+        }
+
+        private static void StartRestfulServer(CancellationToken cancellationToken)
+        {
+            var hostConfig = _serviceProvider.GetService<HostConfiguration>();
+            var registry = _serviceProvider.GetService<ISpecRegistry>();
+            registry.RegisterDirectory(hostConfig.SpecDirectory);
+
+            var httpServer = _serviceProvider.GetService<HttpServer>();
+            
+            httpServer.Start(cancellationToken);
+        }
+
+        private static void StartCtlServer()
+        {
+            var server = new Server
+            {
+                Services = { MockController.BindService(new MockControllerImpl()) },
+                Ports = { new ServerPort("localhost", 30000, ServerCredentials.Insecure) }
+            };
+            server.Start();
         }
     }
 }
