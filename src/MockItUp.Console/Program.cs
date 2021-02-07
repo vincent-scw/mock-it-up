@@ -26,8 +26,6 @@ namespace MockItUp.Console
             var logRepo = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepo, new FileInfo("log4net.config"));
 
-            var log = LogManager.GetLogger("main");
-
             RegisterServices();
 
             _configPath = args.Length > 0 ? args[0] : Environment.GetEnvironmentVariable("SETTING_FILE");
@@ -91,10 +89,11 @@ namespace MockItUp.Console
 
         private static async Task StartCtlServer(CancellationToken cancellationToken)
         {
+            var config = _serviceProvider.GetService<HostConfiguration>();
             var server = new Server
             {
-                Services = { MockController.BindService(new MockControllerImpl()) },
-                Ports = { new ServerPort("localhost", 30000, ServerCredentials.Insecure) }
+                Services = { MockController.BindService(new MockControllerImpl(_serviceProvider)) },
+                Ports = { new ServerPort(config.Host, 30000, ServerCredentials.Insecure) }
             };
             server.Start();
 

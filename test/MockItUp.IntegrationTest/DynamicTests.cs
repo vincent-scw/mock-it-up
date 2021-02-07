@@ -7,16 +7,17 @@ using Xunit;
 
 namespace MockItUp.IntegrationTest
 {
+    [Collection("Dynamic")]
     public class DynamicTests
     {
-        //[Fact]
-        //public async Task DynamicStub_ShouldWork()
-        //{
-        //    var client = new MockClient("127.0.0.1:30000");
-        //    var result = await client.RegisterDynamicStubAsync(new DynamicStub());
+        [Fact]
+        public async Task DynamicStub_ShouldWork()
+        {
+            var client = new MockClient(EnvArguments.GetCtlService());
+            var result = await client.RegisterDynamicStubAsync(new DynamicStub());
 
-        //    Assert.NotNull(result);
-        //    Console.WriteLine(result.StubID);
-        //}
+            Assert.NotNull(result);
+            Console.WriteLine(result.StubID);
+        }
     }
 }

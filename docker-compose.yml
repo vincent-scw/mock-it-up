@@ -20,5 +20,6 @@ services:
     environment:
       - SERVICE_ORDER=http://mockserver:5000
       - SERVICE_SHIPMENT=http://mockserver:5010
+      - CTL_SERVICE=mockserver:30000
     depends_on:
       - mockserver

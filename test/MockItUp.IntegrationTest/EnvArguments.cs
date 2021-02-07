@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MockItUp.IntegrationTest
 {
@@ -9,6 +7,11 @@ namespace MockItUp.IntegrationTest
         public static string GetServiceUrl(string serviceName)
         {
             return Environment.GetEnvironmentVariable($"SERVICE_{serviceName.ToUpper()}");
+        }
+
+        public static string GetCtlService()
+        {
+            return Environment.GetEnvironmentVariable("CTL_SERVICE");
         }
     }
 }

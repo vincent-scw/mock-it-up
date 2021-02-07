@@ -9,9 +9,13 @@ namespace MockItUp.Core.Dynamic
     {
         public DynamicMockProvider()
         {
-            StubMatcher = new MockStubMatcher();
+            Registry = new StubRegistry();
+
+            StubMatcher = new MockStubMatcher(Registry);
             ResponseResolver = new MockResponseResolver();
         }
+
+        public StubRegistry Registry { get; }
 
         public IMockStubMatcher StubMatcher { get; }
         public IMockResponseResolver ResponseResolver { get; }
