@@ -3,6 +3,6 @@
     public class SpecDeclaration
     {
         public string Version { get; set; }
-        public string ServerName { get; set; }
+        public string Service { get; set; }
     }
 }

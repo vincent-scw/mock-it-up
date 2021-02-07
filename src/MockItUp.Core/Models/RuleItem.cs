@@ -20,5 +20,15 @@ namespace MockItUp.Core.Models
             var matchResult = template.Match(url);
             return matchResult;
         }
+
+        public RuleItem CreateStub()
+        {
+            return new RuleItem();
+        }
+
+        //public RuleItem When(Action<RequestModel> when)
+        //{
+            
+        //}
     }
 }

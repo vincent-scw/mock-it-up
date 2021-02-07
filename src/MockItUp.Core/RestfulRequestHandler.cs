@@ -1,14 +1,16 @@
 ﻿using MockItUp.Common;
 using MockItUp.Core.Contracts;
 using MockItUp.Core.Models;
+using MockItUp.Core.Restful;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using UriTemplate.Core;
 
-namespace MockItUp.Core.Restful
+namespace MockItUp.Core
 {
     public class RestfulRequestHandler : IRequestHandler
     {
@@ -47,17 +49,8 @@ namespace MockItUp.Core.Restful
                     _items[host.Key] :
                     _items.SelectMany(x => x.Value);
 
-                RuleItem matchedItem = null;
-                UriTemplate.Core.UriTemplateMatch match = null;
-                foreach (var c in candidates)
-                {
-                    match = c.Match(context.Request.HttpMethod, context.Request.Url);
-                    if (match != null)
-                    {
-                        matchedItem = c;
-                        break;
-                    }
-                }
+                RuleItem matchedItem = Match(context.Request, candidates, out UriTemplateMatch match);
+                
                 if (matchedItem == null)
                     throw new NotSupportedException($"Cannot find matched rule. Request ignored.");
 
@@ -82,12 +75,27 @@ namespace MockItUp.Core.Restful
             }
         }
 
+        private static RuleItem Match(HttpListenerRequest request, IEnumerable<RuleItem> candidates, out UriTemplateMatch match)
+        {
+            match = null;
+            foreach (var c in candidates)
+            {
+                match = c.Match(request.HttpMethod, request.Url);
+                if (match != null)
+                {
+                    return c;
+                }
+            }
+
+            return null;
+        }
+
         private static IReadOnlyDictionary<string, IList<RuleItem>> BuildItemDictionary(IList<SpecDeclaration> specs) 
         {
             var ret = new Dictionary<string, IList<RuleItem>>();
             foreach (RestfulSpecDeclaration spec in specs)
             {
-                var key = string.IsNullOrEmpty(spec.ServerName) ? WILDCARD : spec.ServerName;
+                var key = string.IsNullOrEmpty(spec.Service) ? WILDCARD : spec.Service;
                 if (!ret.ContainsKey(key))
                     ret.Add(key, new List<RuleItem>());
 
