@@ -33,7 +33,7 @@ namespace MockItUp.Console
                 }
             });
 
-            var result = new RegisterResult { StubID = stubId?.ToString() };
+            var result = new RegisterResult { StubID = stubId.ToString() };
             return Task.FromResult(result);
         }
     }
