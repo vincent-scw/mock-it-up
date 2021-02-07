@@ -17,13 +17,15 @@
     <PackageReference Include="UriTemplate.Core" Version="1.0.2" />
     <PackageReference Include="YamlDotNet" Version="9.1.4" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Protobuf Include="**/*.proto" />
-  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\MockItUp.Common\MockItUp.Common.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Protobuf Include="..\..\mockctl.proto" GrpcServices="Server">
+      <Link>mockctl.proto</Link>
+    </Protobuf>
   </ItemGroup>
 
 </Project>

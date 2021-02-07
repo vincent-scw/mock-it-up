@@ -8,11 +8,11 @@ using Xunit;
 
 namespace MockItUp.IntegrationTest
 {
-    public class TestCase_OrderShipment
+    public class StaticTests
     {
         private readonly string _orderUrl;
         private readonly string _shipmentUrl;
-        public TestCase_OrderShipment()
+        public StaticTests()
         {
             _orderUrl = EnvArguments.GetServiceUrl("order") + "/api";
             _shipmentUrl = EnvArguments.GetServiceUrl("shipment") + "/api";

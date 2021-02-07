@@ -1,3 +1,5 @@
+syntax = "proto3";
+
 // The mock controller service definition
 service MockController {
 	// Register a dynamic stub to mock server
@@ -6,22 +8,22 @@ service MockController {
 
 // A dynamic stub for http request and response
 message DynamicStub {
-	required Request request = 1;
-	required Response respone = 2;
+	Request request = 1;
+	Response respone = 2;
 }
 
 // Http request definition
 message Request {
-	required string method = 1;
-	required string urlTemplate = 2;
+	string method = 1;
+	string urlTemplate = 2;
 }
 
 // Http response definition
 message Response {
-	required int32 statusCode = 1;
-	optional string body = 2;
+	int32 statusCode = 1;
+	string body = 2;
 }
 
 message RegisterResult {
-	required string stubID = 1;
+	string stubID = 1;
 }

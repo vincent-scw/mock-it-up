@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace MockItUp.Console
 {
@@ -35,7 +36,9 @@ namespace MockItUp.Console
             var cancellationToken = cancellationTokenSource.Token;
 
             try
-            {                
+            {
+                Task.Run(() => StartCtlServer(cancellationToken));
+
                 StartRestfulServer(cancellationToken);
 
                 // cancellationTokenSource.Cancel();
@@ -85,7 +88,7 @@ namespace MockItUp.Console
             httpServer.Start(cancellationToken);
         }
 
-        private static void StartCtlServer()
+        private static async Task StartCtlServer(CancellationToken cancellationToken)
         {
             var server = new Server
             {
@@ -93,6 +96,10 @@ namespace MockItUp.Console
                 Ports = { new ServerPort("localhost", 30000, ServerCredentials.Insecure) }
             };
             server.Start();
+
+            Logger.LogInfo("Control server started...");
+            while (!cancellationToken.IsCancellationRequested) { }
+            await server.ShutdownAsync();
         }
     }
 }
