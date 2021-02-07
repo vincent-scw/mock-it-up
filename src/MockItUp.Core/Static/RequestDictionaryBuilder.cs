@@ -6,11 +6,11 @@ using System.Dynamic;
 using System.Net;
 using UriTemplate.Core;
 
-namespace MockItUp.Core.Restful
+namespace MockItUp.Core.Static
 {
     internal class RequestDictionaryBuilder
     {
-        public IDictionary<string, dynamic> Build(HttpListenerRequest hlr, UriTemplateMatch uriMatch, string bodyStr)
+        public static IDictionary<string, dynamic> Build(HttpListenerRequest hlr, UriTemplateMatch uriMatch, string bodyStr)
         {
             var request = new Dictionary<string, object>();
 
@@ -28,7 +28,7 @@ namespace MockItUp.Core.Restful
             return request;
         }
 
-        private IDictionary<string, dynamic> BuildPath(UriTemplateMatch uriMatch)
+        private static IDictionary<string, dynamic> BuildPath(UriTemplateMatch uriMatch)
         {
             var ret = new Dictionary<string, object>();
             foreach (var b in uriMatch.Bindings)
@@ -39,7 +39,7 @@ namespace MockItUp.Core.Restful
             return ret;
         }
 
-        private IDictionary<string, dynamic> BuildHeaders(NameValueCollection headers)
+        private static IDictionary<string, dynamic> BuildHeaders(NameValueCollection headers)
         {
             var ret = new Dictionary<string, object>();
             foreach (var h in headers.AllKeys)
@@ -50,7 +50,7 @@ namespace MockItUp.Core.Restful
             return ret;
         }
 
-        private IDictionary<string, dynamic> BuildBody(string bodyStr)
+        private static IDictionary<string, dynamic> BuildBody(string bodyStr)
         {
             if (string.IsNullOrEmpty(bodyStr))
                 return null;

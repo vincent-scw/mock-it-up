@@ -1,11 +1,12 @@
 ﻿using MockItUp.Core.Models;
 using System.Net;
+using System.Threading.Tasks;
 using UriTemplate.Core;
 
 namespace MockItUp.Core.Contracts
 {
     public interface IMockResponseResolver
     {
-        UriTemplateMatch Match(HttpListenerRequest request, string service, out RuleItem stub);
+        Task ResolveAsync(HttpListenerContext context, StubItem stub, UriTemplateMatch match);
     }
 }

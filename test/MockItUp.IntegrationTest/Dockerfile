@@ -2,9 +2,11 @@
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS base
 
-WORKDIR /test
-COPY ["MockItUp.IntegrationTest/MockItUp.IntegrationTest.csproj", "MockItUp.IntegrationTest/"]
-RUN dotnet restore "MockItUp.IntegrationTest/MockItUp.IntegrationTest.csproj"
+WORKDIR /
+COPY ["src/mockctl.proto", "src/"]
+COPY ["src/MockItUp.Client/MockItUp.Client.csproj", "src/MockItUp.Client/"]
+COPY ["test/MockItUp.IntegrationTest/MockItUp.IntegrationTest.csproj", "test/MockItUp.IntegrationTest/"]
+RUN dotnet restore "test/MockItUp.IntegrationTest/MockItUp.IntegrationTest.csproj"
 COPY . .
 WORKDIR "/test/MockItUp.IntegrationTest"
 RUN dotnet build "MockItUp.IntegrationTest.csproj" -c Release -o /test/artifact

@@ -7,8 +7,8 @@ using UriTemplate.Core;
 
 namespace MockItUp.Core.Contracts
 {
-    interface IMockStubMatcher
+    public interface IMockStubMatcher
     {
-        UriTemplateMatch Match(HttpListenerRequest request, string service, out RuleItem stub);
+        UriTemplateMatch Match(HttpListenerRequest request, string service, out StubItem stub);
     }
 }

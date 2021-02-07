@@ -3,7 +3,7 @@ using UriTemplate.Core;
 
 namespace MockItUp.Core.Models
 {
-    public class RuleItem
+    public class StubItem
     {
         public RequestModel Request { get; set; }
         public ResponseModel Response { get; set; }
@@ -21,9 +21,9 @@ namespace MockItUp.Core.Models
             return matchResult;
         }
 
-        public RuleItem CreateStub()
+        public StubItem CreateStub()
         {
-            return new RuleItem();
+            return new StubItem();
         }
 
         //public RuleItem When(Action<RequestModel> when)

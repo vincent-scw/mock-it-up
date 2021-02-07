@@ -1,7 +1,8 @@
 ﻿namespace MockItUp.Core.Contracts
 {
-    public interface IMockProvider
+    internal interface IMockProvider
     {
-        IRequestHandler RequestHandler { get; }
+        IMockStubMatcher StubMatcher { get; }
+        IMockResponseResolver ResponseResolver { get; }
     }
 }

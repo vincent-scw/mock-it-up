@@ -20,7 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\MockItUp.Client\MockItUp.Client.csproj" />
+    <ProjectReference Include="..\..\src\MockItUp.Client\MockItUp.Client.csproj">
+      <Private></Private>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

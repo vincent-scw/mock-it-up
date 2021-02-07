@@ -1,5 +1,6 @@
 ﻿version: v1
-rules:
+service: order
+stubs:
   - request:
       method: get
       path: api/orders/{id}

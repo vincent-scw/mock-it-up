@@ -23,13 +23,9 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Protobuf Include="..\..\mockctl.proto" GrpcServices="Server">
+    <Protobuf Include="..\mockctl.proto" GrpcServices="Server">
       <Link>mockctl.proto</Link>
     </Protobuf>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Dynamic\" />
   </ItemGroup>
 
 </Project>

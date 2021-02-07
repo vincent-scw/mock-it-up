@@ -15,8 +15,8 @@ services:
       
   integrationtest:
     build:
-      context: ./test
-      dockerfile: MockItUp.IntegrationTest/Dockerfile
+      context: .
+      dockerfile: test/MockItUp.IntegrationTest/Dockerfile
     environment:
       - SERVICE_ORDER=http://mockserver:5000
       - SERVICE_SHIPMENT=http://mockserver:5010

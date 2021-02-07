@@ -1,5 +1,6 @@
 ﻿using MockItUp.Common;
 using MockItUp.Common.Utilities;
+using MockItUp.Core.Contracts;
 using MockItUp.Core.Models;
 using Newtonsoft.Json;
 using System;
@@ -8,21 +9,33 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using UriTemplate.Core;
 
-namespace MockItUp.Core.Restful
+namespace MockItUp.Core.Static
 {
-    public class ResponseResolver
+    public class MockResponseResolver : IMockResponseResolver
     {
         private readonly HostConfiguration _configuration;
-        public ResponseResolver(HostConfiguration configuration)
+
+        public MockResponseResolver(HostConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        public async Task Resolve(HttpListenerResponse resp, ResponseModel responseModel, IDictionary<string, dynamic> requestDict)
+        public async Task ResolveAsync(HttpListenerContext context, StubItem stub, UriTemplateMatch match)
         {
-            resp.StatusCode = responseModel.StatusCode;
-            resp.ContentType = responseModel.ContentType;
+            var req = context.Request;
+            var res = context.Response;
+            var responseModel = stub.Response;
+
+            var reader = new StreamReader(req.InputStream);
+            var bodyStr = reader.ReadToEnd();
+            Logger.LogInfo($"Body: {bodyStr}");
+
+            var requestDict = RequestDictionaryBuilder.Build(context.Request, match, bodyStr);
+
+            res.StatusCode = responseModel.StatusCode;
+            res.ContentType = responseModel.ContentType;
 
             // No body, return
             if (string.IsNullOrEmpty(responseModel.Body))
@@ -47,10 +60,10 @@ namespace MockItUp.Core.Restful
             }
 
             byte[] data = Encoding.UTF8.GetBytes(body);
-            resp.ContentEncoding = Encoding.UTF8;
-            resp.ContentLength64 = data.LongLength;
+            res.ContentEncoding = Encoding.UTF8;
+            res.ContentLength64 = data.LongLength;
 
-            await resp.OutputStream.WriteAsync(data, 0, data.Length);
+            await res.OutputStream.WriteAsync(data, 0, data.Length);
         }
 
         private string FormatBody(string bodyStr, IDictionary<string, dynamic> requestDict)

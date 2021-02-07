@@ -8,11 +8,11 @@ using UriTemplate.Core;
 
 namespace MockItUp.Core
 {
-    abstract class MockStubMatcherBase : IMockStubMatcher
+    public abstract class MockStubMatcherBase : IMockStubMatcher
     {
-        public abstract IEnumerable<RuleItem> GetCandidates(string service);
+        public abstract IEnumerable<StubItem> GetCandidates(string service);
 
-        public UriTemplateMatch Match(HttpListenerRequest request, string service, out RuleItem stub)
+        public UriTemplateMatch Match(HttpListenerRequest request, string service, out StubItem stub)
         {
             stub = null;
             UriTemplateMatch match = null;

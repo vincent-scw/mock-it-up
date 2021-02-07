@@ -5,7 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using MockItUp.Common;
 using MockItUp.Core;
 using MockItUp.Core.Contracts;
+using MockItUp.Core.Dynamic;
 using MockItUp.Core.Models;
+using MockItUp.Core.Static;
 using System;
 using System.IO;
 using System.Reflection;
@@ -56,14 +58,17 @@ namespace MockItUp.Console
         private static void RegisterServices()
         {
             var services = new ServiceCollection();
+            
             services.AddSingleton<HttpServer>();
             services.AddSingleton((s) => Common.Utilities.YamlSerializer.DeserializeFile<HostConfiguration>(_configPath));
-            services.AddSingleton<ISpecLoader, SpecLoader>();
-            services.AddSingleton<ISpecRegistry, SpecRegistry>();
 
-            services.AddSingleton<IMockProvider, Core.Restful.RestfulMockProvider>();
-
+            services.AddSingleton<IRequestHandler, RestfulRequestHandler>();
+            services.AddSingleton<StaticMockProvider>();
+            services.AddSingleton<DynamicMockProvider>();
+            
             _serviceProvider = services.BuildServiceProvider(true);
+
+            services.AddSingleton<IServiceProvider>(_serviceProvider);
         }
 
         private static void DisposeServices()
@@ -79,10 +84,6 @@ namespace MockItUp.Console
 
         private static void StartRestfulServer(CancellationToken cancellationToken)
         {
-            var hostConfig = _serviceProvider.GetService<HostConfiguration>();
-            var registry = _serviceProvider.GetService<ISpecRegistry>();
-            registry.RegisterDirectory(hostConfig.SpecDirectory);
-
             var httpServer = _serviceProvider.GetService<HttpServer>();
             
             httpServer.Start(cancellationToken);

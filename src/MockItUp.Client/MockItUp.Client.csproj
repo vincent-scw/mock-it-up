@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\..\mockctl.proto" GrpcServices="Client">
+    <Protobuf Include="..\mockctl.proto" GrpcServices="Client">
       <Link>mockctl.proto</Link>
     </Protobuf>
   </ItemGroup>

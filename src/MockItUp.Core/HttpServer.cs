@@ -10,10 +10,10 @@ namespace MockItUp.Core
     {
         private readonly HostConfiguration _hostConfiguration;
         private readonly IRequestHandler _handler;
-        public HttpServer(HostConfiguration hostConfiguration, IMockProvider provider)
+        public HttpServer(HostConfiguration hostConfiguration, IRequestHandler requestHandler)
         {
             _hostConfiguration = hostConfiguration;
-            _handler = provider.RequestHandler;
+            _handler = requestHandler;
         }
 
         public void Start(CancellationToken cancelToken)

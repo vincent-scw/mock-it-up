@@ -17,11 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockItUp.IntegrationTest", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockItUp.UnitTest", "test\MockItUp.UnitTest\MockItUp.UnitTest.csproj", "{9F1B7DA4-BBC9-45D2-9534-99E48EB3AD83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockItUp.Client", "src\MockItUp.Client\MockItUp.Client.csproj", "{7E95F0C3-C56E-4D78-BD5F-D0CFD3ADA3A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockItUp.Client", "src\MockItUp.Client\MockItUp.Client.csproj", "{7E95F0C3-C56E-4D78-BD5F-D0CFD3ADA3A2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFiles", "SolutionFiles", "{263F832B-C85A-413C-93D3-180EA462B40B}"
 	ProjectSection(SolutionItems) = preProject
-		mockctl.proto = mockctl.proto
+		src\mockctl.proto = src\mockctl.proto
 	EndProjectSection
 EndProject
 Global
