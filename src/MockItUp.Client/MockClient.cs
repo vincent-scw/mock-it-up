@@ -14,10 +14,9 @@ namespace MockItUp.Client
             _client = new MockController.MockControllerClient(_channel);
         }
 
-        public async Task<RegisterResult> RegisterDynamicStubAsync(DynamicStub stub)
+        public TestScenario BeginScenario()
         {
-            var result = await _client.RegisterDynamicStubAsync(stub);
-            return result;
+            return new TestScenario(_client);
         }
 
         public void Dispose()

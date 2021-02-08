@@ -1,4 +1,5 @@
-﻿using Grpc.Core;
+﻿using Google.Protobuf.WellKnownTypes;
+using Grpc.Core;
 using MockItUp.Core.Dynamic;
 using MockItUp.Core.Models;
 using System;
@@ -17,13 +18,13 @@ namespace MockItUp.Console
         public override Task<RegisterResult> RegisterDynamicStub(DynamicStub request, ServerCallContext context)
         {
             var req = request.Request;
-            var res = request.Respone;
+            var res = request.Response;
             var stubId = _mockProvider.Registry.Register(new StubItem 
             {
                 Request = new RequestModel
                 {
                     Method = req.Method,
-                    Path = req.UrlTemplate,
+                    Path = req.UriTemplate,
                     BodyType = BodyType.Direct
                 },
                 Response = new ResponseModel
@@ -31,10 +32,16 @@ namespace MockItUp.Console
                     Body = res.Body,
                     StatusCode = res.StatusCode
                 }
-            });
+            }, req.Service);
 
-            var result = new RegisterResult { StubID = stubId.ToString() };
+            var result = new RegisterResult { Succeed = true, StubID = stubId.ToString() };
             return Task.FromResult(result);
+        }
+
+        public override Task<RemoveResult> RemoveDynamicStubs(StubIDs request, ServerCallContext context)
+        {
+            _mockProvider.Registry.Remove(request.IdList);
+            return Task.FromResult(new RemoveResult { Succeed = true });
         }
     }
 }

@@ -5,8 +5,14 @@ namespace MockItUp.Core.Models
 {
     public class StubItem
     {
+        public Guid ID { get; private set; }
         public RequestModel Request { get; set; }
         public ResponseModel Response { get; set; }
+
+        public void SetID(Guid id)
+        {
+            ID = id;
+        }
 
         public UriTemplateMatch Match(string method, Uri url)
         {
@@ -20,15 +26,5 @@ namespace MockItUp.Core.Models
             var matchResult = template.Match(url);
             return matchResult;
         }
-
-        public StubItem CreateStub()
-        {
-            return new StubItem();
-        }
-
-        //public RuleItem When(Action<RequestModel> when)
-        //{
-            
-        //}
     }
 }

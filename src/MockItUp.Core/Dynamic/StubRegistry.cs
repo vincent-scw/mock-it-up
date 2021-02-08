@@ -1,9 +1,8 @@
 ﻿using MockItUp.Core.Contracts;
 using MockItUp.Core.Models;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace MockItUp.Core.Dynamic
 {
@@ -17,19 +16,33 @@ namespace MockItUp.Core.Dynamic
 
         public IReadOnlyDictionary<string, IList<StubItem>> Stubs => _stubDict;
 
-        public Guid Register(StubItem stub, string service = "*")
+        public Guid Register(StubItem stub, string service)
         {
+            var key = service;
+            if (string.IsNullOrEmpty(service))
+                key = "*";
+
             var id = Guid.NewGuid();
+            stub.SetID(id);
+
             IList<StubItem> items;
-            if (_stubDict.ContainsKey(service))
-                items = _stubDict[service];
+            if (_stubDict.ContainsKey(key))
+                items = _stubDict[key];
             else
                 items = new List<StubItem>();
 
             items.Add(stub);
-            _stubDict[service] = items;
+            _stubDict[key] = items;
 
             return id;
+        }
+
+        public void Remove(IList<string> ids)
+        {
+            foreach (var d in _stubDict)
+            {
+                _stubDict[d.Key] = d.Value.Where(x => !ids.Contains(x.ID.ToString())).ToList();
+            }
         }
     }
 }

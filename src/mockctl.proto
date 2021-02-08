@@ -4,18 +4,21 @@ syntax = "proto3";
 service MockController {
 	// Register a dynamic stub to mock server
 	rpc RegisterDynamicStub (DynamicStub) returns (RegisterResult) {}
+	// Remove dynamic stubs by ids
+	rpc RemoveDynamicStubs (StubIDs) returns (RemoveResult) {}
 }
 
 // A dynamic stub for http request and response
 message DynamicStub {
 	Request request = 1;
-	Response respone = 2;
+	Response response = 2;
 }
 
 // Http request definition
 message Request {
 	string method = 1;
-	string urlTemplate = 2;
+	string uriTemplate = 2;
+	string service = 3;
 }
 
 // Http response definition
@@ -24,6 +27,18 @@ message Response {
 	string body = 2;
 }
 
+// Register result
 message RegisterResult {
 	string stubID = 1;
+	bool succeed = 2;
+}
+
+// Stub ID list
+message StubIDs {
+	repeated string idList = 1;
+}
+
+// Remove result
+message RemoveResult {
+	bool succeed = 1;
 }

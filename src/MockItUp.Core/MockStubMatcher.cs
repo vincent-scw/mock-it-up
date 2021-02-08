@@ -1,16 +1,24 @@
 ﻿using MockItUp.Core.Contracts;
 using MockItUp.Core.Models;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
-using System.Text;
 using UriTemplate.Core;
 
 namespace MockItUp.Core
 {
-    public abstract class MockStubMatcherBase : IMockStubMatcher
+    public class MockStubMatcher : IMockStubMatcher
     {
-        public abstract IEnumerable<StubItem> GetCandidates(string service);
+        private readonly IStubRegistry _stubRegistry;
+        public MockStubMatcher(IStubRegistry stubRegistry)
+        {
+            _stubRegistry = stubRegistry;
+        }
+
+        private IEnumerable<StubItem> GetCandidates(string service)
+        {
+            return _stubRegistry.Stubs.ContainsKey(service) ? _stubRegistry.Stubs[service] : _stubRegistry.Stubs.SelectMany(x => x.Value);
+        }
 
         public UriTemplateMatch Match(HttpListenerRequest request, string service, out StubItem stub)
         {
