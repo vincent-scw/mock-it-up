@@ -7,7 +7,7 @@ docker pull edentidus/mockitup
 ```
 
 ## Motivation
-In microservice architecture, a serviec might denpendent to multiple other services by Restful Http requests. When doing acceptence/integration test, it is very annoying to link under testing service to real downstream services. Trying to decoupe the dependencies, ***Mock It Up*** is a mock server to replace the real services.
+In microservice architecture, a serviec might denpendent to multiple other services by Restful Http requests. When doing acceptence/integration test, it is very annoying to connect to real downstream services. Trying to decoupe the dependencies, ***Mock It Up*** is a mock server to replace the real services.
 
 ![img](/design.png)
 
