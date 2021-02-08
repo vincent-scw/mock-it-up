@@ -9,16 +9,16 @@ docker pull edentidus/mockitup
 ## Motivation
 In microservice architecture, a serviec might denpendent to multiple other services by Restful Http requests. When doing acceptence/integration test, it is very annoying to link under testing service to real downstream services. Trying to decoupe the dependencies, ***Mock It Up*** is a mock server to replace the real services.
 
-![img](https://github.com/vincent-scw/mock-it-up/blob/main/design.png)
+![img](/design.png)
 
 ## Config the mock server
 When start, ***Mock It Up*** reads settings via configuration file. Please ref to [config.yml](https://github.com/vincent-scw/mock-it-up/blob/main/test/MockItUp.IntegrationTest/mockitup.d/conf.yml)
-| Property | Required? | Avaliable Options   | Notes                                                                    |
-|----------|-----------|---------------------|--------------------------------------------------------------------------|
-| host     | optional  |                     | Default: &ast;. (use 'localhost' in Windows for debugging)               |
-| controlPort | required for dynamic |       | Default: 30000 (dynamic only)                                            |
-| specDirectory | required for static  |     | The url path to spec directory (static only)                             |
-| payloadDirectory | optional  |             | The url path to payload (definition of response bodies) directory (static only) |
+| Property | Required? | Notes                                                                    |
+|----------|-----------|--------------------------------------------------------------------------|
+| host     | optional  | Default: &ast;. (use 'localhost' in Windows for debugging)               |
+| controlPort | required for dynamic |Default: 30000 (dynamic only)                                            |
+| specDirectory | required for static  | The url path to spec directory (static only)                             |
+| payloadDirectory | optional  | The url path to payload (definition of response bodies) directory (static only) |
 
 ## Prepare for testing
 * For ***static*** stub setting, please refer to [Static Stub Wiki](https://github.com/vincent-scw/mock-it-up/wiki/Static-Stub)
