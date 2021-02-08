@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/vincent-scw/mock-it-up.svg?branch=main)](https://travis-ci.org/vincent-scw/mock-it-up)
+
 # mock-it-up
 ***Mock It Up*** is a mock server for testing purpose. It supports both ***static*** and ***dynamic*** stubs consist of http request/response.
 

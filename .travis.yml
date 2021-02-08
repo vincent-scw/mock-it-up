@@ -1,7 +1,6 @@
 sudo: required
 
 env:
-  - DOCKER_COMPOSE_VERSION=1.4.2
   global:
     - VERSION_NUMBER="v0.$TRAVIS_BUILD_NUMBER"
 
