@@ -39,9 +39,11 @@ namespace MockItUp.Core.Dynamic
 
         public void Remove(IList<string> ids)
         {
-            foreach (var d in _stubDict)
+            var keys = new string[_stubDict.Keys.Count];
+            _stubDict.Keys.CopyTo(keys, 0);
+            foreach (var key in keys)
             {
-                _stubDict[d.Key] = d.Value.Where(x => !ids.Contains(x.ID.ToString())).ToList();
+                _stubDict[key] = _stubDict[key].Where(x => !ids.Contains(x.ID.ToString())).ToList();
             }
         }
     }

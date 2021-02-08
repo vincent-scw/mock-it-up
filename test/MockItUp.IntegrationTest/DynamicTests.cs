@@ -16,7 +16,7 @@ namespace MockItUp.IntegrationTest
         private readonly MockClient _client;
         public DynamicTests()
         {
-            _orderUrl = EnvArguments.GetServiceUrl("order") + "/api";
+            _orderUrl = EnvArguments.GetServiceUrl("order");
             _client = new MockClient(EnvArguments.GetCtlService());
         }
 
@@ -31,7 +31,7 @@ namespace MockItUp.IntegrationTest
         [Fact]
         public async Task DynamicStub_ShouldWork()
         {
-            var httpClient = new HttpClient();
+            using var httpClient = new HttpClient();
 
             using (var scenario = _client.BeginScenario())
             {
@@ -53,7 +53,7 @@ namespace MockItUp.IntegrationTest
                 Assert.NotNull(regResult);
                 Assert.True(regResult.Succeed);
 
-                var response = await httpClient.GetAsync($"{_orderUrl}/orders/{orderId}");
+                var response = await httpClient.GetAsync($"{_orderUrl}/api/orders/{orderId}");
                 var order = await ReadResponseAsync<dynamic>(response.Content);
 
                 Assert.Equal(orderId, (int)order.id);

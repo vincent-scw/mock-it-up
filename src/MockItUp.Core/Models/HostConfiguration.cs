@@ -13,6 +13,10 @@ namespace MockItUp.Core.Models
         /// </summary>
         public string Host { get; set; } = "*";
         /// <summary>
+        /// Port for control server
+        /// </summary>
+        public int ContrlPort { get; set; } = 30000;
+        /// <summary>
         /// Accept connections simultaneously
         /// </summary>
         public int AcceptConnections { get; set; } = 5;

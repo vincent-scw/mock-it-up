@@ -93,7 +93,7 @@ namespace MockItUp.Console
             var server = new Server
             {
                 Services = { MockController.BindService(new MockControllerImpl(_serviceProvider)) },
-                Ports = { new ServerPort(config.Host, 30000, ServerCredentials.Insecure) }
+                Ports = { new ServerPort(config.Host, config.ContrlPort, ServerCredentials.Insecure) }
             };
             server.Start();
 

@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MockItUp.Client
 {
     public class TestScenario : IDisposable
     {
-        private readonly ConcurrentBag<string> _stubIds;
+        private List<string> _stubIds;
         private readonly MockController.MockControllerClient _client;
         public TestScenario(MockController.MockControllerClient client)
         {
             _client = client;
-            _stubIds = new ConcurrentBag<string>();
+            _stubIds = new List<string>();
         }
 
         public RegisterResult RegisterDynamicStub(DynamicStub stub)
@@ -30,33 +31,46 @@ namespace MockItUp.Client
             return result;
         }
 
-        public void RemoveDynamicStub(params string[] stubIds)
+        public void RemoveDynamicStubs(params string[] stubIds)
         {
-            var ids = new StubIDs();
-            ids.IdList.Add(stubIds);
-            _client.RemoveDynamicStubs(ids);
+            var ids = PrepareStubIDs(stubIds);
+            if (ids == null)
+                return;
 
-            _stubIds.TryTake(out string _);
+            if (_client.RemoveDynamicStubs(ids).Succeed)
+                _stubIds = _stubIds.Where(x => !stubIds.Contains(x)).ToList();
         }
 
-        public async Task RemoveDynamicStubAsync(params string[] stubIds)
+        public async Task RemoveDynamicStubsAsync(params string[] stubIds)
         {
-            var ids = new StubIDs();
-            ids.IdList.Add(stubIds);
-            await _client.RemoveDynamicStubsAsync(ids);
+            var ids = PrepareStubIDs(stubIds);
+            if (ids == null)
+                return;
 
-            _stubIds.TryTake(out string _);
+            if ((await _client.RemoveDynamicStubsAsync(ids)).Succeed)
+                _stubIds = _stubIds.Where(x => !stubIds.Contains(x)).ToList();
         }
 
         public void Close()
         {
             // Remove stubs created in current scenario
-            RemoveDynamicStub(_stubIds.ToArray());
+            RemoveDynamicStubs(_stubIds.ToArray());
         }
 
         void IDisposable.Dispose()
         {
             Close();
+        }
+
+        private StubIDs PrepareStubIDs(string[] stubIds)
+        {
+            if (stubIds == null || stubIds.Length == 0)
+            {
+                return null;
+            }
+            var ids = new StubIDs();
+            ids.IdList.Add(stubIds);
+            return ids;
         }
     }
 }

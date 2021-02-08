@@ -12,7 +12,7 @@ namespace MockItUp.UnitTest.Core
         {
             var yaml = @"
 version: v1
-hosts:
+services:
   order: http://localhost:1000/
   shipment: http://localhost:1010/
 ";
