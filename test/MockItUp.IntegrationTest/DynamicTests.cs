@@ -48,7 +48,7 @@ namespace MockItUp.IntegrationTest
                             title = "this is a test"
                         })
                     }
-                }); ;
+                });
 
                 Assert.NotNull(regResult);
                 Assert.True(regResult.Succeed);
