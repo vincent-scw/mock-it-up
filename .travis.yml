@@ -1,0 +1,25 @@
+sudo: required
+
+env:
+  - DOCKER_COMPOSE_VERSION=1.4.2
+  global:
+    - VERSION_NUMBER="v0.$TRAVIS_BUILD_NUMBER"
+
+services:
+  - docker
+
+script:
+  - echo "building with $VERSION_NUMBER..."
+  - docker build -t edentidus/mockitup_ut:$VERSION_NUMBER -f ./test/MockItUp.UnitTest/Dockerfile .
+  - docker run edentidus/mockitup_ut:$VERSION_NUMBER
+  - docker-compose up --build --abort-on-container-exit --exit-code-from integrationtest
+
+after_success:
+  - docker build -t edentidus/mockitup:$VERSION_NUMBER -f ./src/MockItUp.Console/Dockerfile .
+  # - echo "$DOCKER_PASSWORD" | docker login sjzvin.azurecr.io -u "$DOCKER_USERNAME" --password-stdin
+  # - docker push sjzvin.azurecr.io/sjz_userprofilesvc:$VERSION_NUMBER
+  
+#notifications:
+#  email:
+#    on_failure: always
+#    on_success: never

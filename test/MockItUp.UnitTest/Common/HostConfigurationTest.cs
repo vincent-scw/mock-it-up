@@ -13,8 +13,8 @@ namespace MockItUp.UnitTest.Core
             var yaml = @"
 version: v1
 services:
-  order: http://localhost:1000/
-  shipment: http://localhost:1010/
+  order: 1000
+  shipment: 1010
 ";
 
             var deserializer = new DeserializerBuilder()

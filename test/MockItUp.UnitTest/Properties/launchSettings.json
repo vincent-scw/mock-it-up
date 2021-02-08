@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MockItUp.UnitTest": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
