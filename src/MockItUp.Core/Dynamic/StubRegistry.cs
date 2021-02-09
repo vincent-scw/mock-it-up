@@ -31,7 +31,8 @@ namespace MockItUp.Core.Dynamic
             else
                 items = new List<StubItem>();
 
-            items.Add(stub);
+            // Insert the new stub to be the first one
+            items.Insert(0, stub);
             _stubDict[key] = items;
 
             return id;

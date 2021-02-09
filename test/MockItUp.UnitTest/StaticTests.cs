@@ -28,7 +28,7 @@ namespace MockItUp.IntegrationTest
             var shipmentId = "SH20210101LA";
 
             // Create order
-            var orderRes = await _service.CreateOrderAsync(new
+            var order = await _service.CreateOrderAsync(new
             {
                 customer = new
                 {
@@ -36,15 +36,15 @@ namespace MockItUp.IntegrationTest
                     name = "somebody"
                 }
             });
-            Assert.Equal("C100", (string)orderRes.customerId);
+            Assert.Equal("C100", (string)order.customerId);
 
             // Create shipment
-            var shipmentRes = await _service.CreateShipmentAsync(new
+            var shipment = await _service.CreateShipmentAsync(new
             {
                 shipmentId,
                 routing = new string[] { "CNSHA", "KRPUS", "USLAX" }
             });
-            Assert.Equal(shipmentId, (string)shipmentRes.shipment.id);
+            Assert.Equal(shipmentId, (string)shipment.id);
 
             // Get order
             var orderGet = await _service.GetOrderAsync(orderId);
