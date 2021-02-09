@@ -3,6 +3,7 @@ using MockItUp.Common;
 using MockItUp.Core.Dynamic;
 using MockItUp.Core.Models;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MockItUp.Console
@@ -33,7 +34,9 @@ namespace MockItUp.Console
                     Response = new ResponseModel
                     {
                         Body = res.Body,
-                        StatusCode = res.StatusCode
+                        StatusCode = res.StatusCode,
+                        ContentType = res.ContentType ?? "application/json",
+                        Headers = res.Headers
                     }
                 }, req.Service);
 

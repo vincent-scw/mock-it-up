@@ -24,7 +24,9 @@ message Request {
 // Http response definition
 message Response {
 	int32 statusCode = 1;
-	string body = 2;
+	string contentType = 2;
+	string body = 3;
+	map<string, string> headers = 4;
 }
 
 // Register result

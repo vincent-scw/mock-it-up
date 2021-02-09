@@ -22,7 +22,7 @@ namespace MockItUp.Core.Models
 
             // Check path
             // Use requested host to match template
-            var template = new UriTemplate.Core.UriTemplate($"{url.Scheme}://{url.Authority}/{Request.Path}");
+            var template = new UriTemplate.Core.UriTemplate(($"{url.Scheme}://{url.Authority}/{Request.Path}"));
             var matchResult = template.Match(url);
             return matchResult;
         }

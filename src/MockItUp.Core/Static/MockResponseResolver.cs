@@ -84,7 +84,7 @@ namespace MockItUp.Core.Static
             if (isFirstLevel)
                 current = GetFirstLevel(current);
 
-            if (!dict.TryGetValue(current.ToLower(), out dynamic currentValue))
+            if (!dict.TryGetValue(current, out dynamic currentValue))
                 return null;
 
             var currentDict = currentValue as IDictionary<string, dynamic>;
