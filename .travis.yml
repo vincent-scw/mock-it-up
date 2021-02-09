@@ -2,22 +2,33 @@ sudo: required
 
 env:
   global:
-    - VERSION_NUMBER="v0.$TRAVIS_BUILD_NUMBER"
+    - VERSION_NUMBER="0.6.$TRAVIS_BUILD_NUMBER"
 
 services:
   - docker
 
+language: csharp
+mono: none
+solution: MockItUp.sln
+dotnet: 3.1
+install:
+  - dotnet restore
+
 script:
-  - echo "building with $VERSION_NUMBER..."
-  - docker build -t edentidus/mockitup_ut:$VERSION_NUMBER -f ./test/MockItUp.UnitTest/Dockerfile .
-  - docker run edentidus/mockitup_ut:$VERSION_NUMBER
+  - dotnet build --configuration Release -p:Version=$VERSION_NUMBER
+  - dotnet test test/MockItUp.UnitTest/MockItUp.UnitTest.csproj
   - docker-compose up --build --abort-on-container-exit --exit-code-from integrationtest
 
-after_success:
-  - docker build -t edentidus/mockitup:$VERSION_NUMBER -f ./src/MockItUp.Console/Dockerfile .
-  # - echo "$DOCKER_PASSWORD" | docker login sjzvin.azurecr.io -u "$DOCKER_USERNAME" --password-stdin
-  # - docker push sjzvin.azurecr.io/sjz_userprofilesvc:$VERSION_NUMBER
-  
+deploy:
+  - docker build -t edentidus/mockitup:v$VERSION_NUMBER -f ./src/MockItUp.Console/Dockerfile .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push edentidus/mockitup:v$VERSION_NUMBER
+  - dotnet nuget push src/MockItUp.Client\bin\Release\MockItUp.Client.$VERSION_NUMBER.nupkg --api-key $NUGET_KEY --source https://api/nuget.org/v3/index.json
+
+stages:
+  - name: deploy
+    if: branch = main
+    
 #notifications:
 #  email:
 #    on_failure: always
