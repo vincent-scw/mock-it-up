@@ -19,15 +19,8 @@ script:
   - dotnet test test/MockItUp.UnitTest/MockItUp.UnitTest.csproj
   - docker-compose up --build --abort-on-container-exit --exit-code-from integrationtest
 
-deploy:
-  - docker build -t edentidus/mockitup:v$VERSION_NUMBER -f ./src/MockItUp.Console/Dockerfile .
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push edentidus/mockitup:v$VERSION_NUMBER
-  - dotnet nuget push src/MockItUp.Client\bin\Release\MockItUp.Client.$VERSION_NUMBER.nupkg --api-key $NUGET_KEY --source https://api/nuget.org/v3/index.json
-
-stages:
-  - name: deploy
-    if: branch = main
+after_success:
+  - ./deploy.sh
     
 #notifications:
 #  email:
