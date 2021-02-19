@@ -14,7 +14,7 @@ In microservice architecture, a serviec might denpendent to multiple other servi
 ![img](/design.png)
 
 ## Prepare for testing
-* ***Static*** stub should be registered before server started by spec files. 
+* ***Static*** stub should be registered as spec files before server started. 
   ```yml
   version: v1
   stubs:
