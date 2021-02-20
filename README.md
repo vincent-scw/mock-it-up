@@ -80,9 +80,10 @@ In microservice architecture, a serviec might denpendent to multiple other servi
   
 ## Config the mock server
 When start, ***Mock It Up*** reads settings via configuration file. Please ref to [config.yml](https://github.com/vincent-scw/mock-it-up/blob/main/test/MockItUp.IntegrationTest/mockitup.d/conf.yml)
-| Property | Required? | Notes                                                                    |
+| Property | Required? | Default Value |Notes                                                                    |
 |----------|-----------|--------------------------------------------------------------------------|
-| host     | required  | Default: &ast;. (use 'localhost' in Windows for debugging)               |
-| controlPort | required for dynamic |Default: 30000 (dynamic only)                                            |
-| specDirectory | required for static  | The url path to spec directory (static only)                             |
-| payloadDirectory | optional  | The url path to payload (definition of response bodies) directory (static only) |
+| host     | required  | &ast;         | Use 'localhost' in Windows for debugging                |
+| services | required  | { *: 5000 }   | Add services by key:value (name:port) pair               |
+| controlPort | required for dynamic | 30000 | dynamic only                                        |
+| specDirectory | required for static | /etc/mockitup.d/specs/ | The url path to spec directory (static only)   |
+| payloadDirectory | optional | /etc/mockitup.d/payloads/ | The url path to payload (definition of response bodies) directory (static only) |
