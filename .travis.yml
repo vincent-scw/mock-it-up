@@ -20,7 +20,7 @@ script:
   - docker-compose up --build --abort-on-container-exit --exit-code-from integrationtest
 
 after_success:
-  - ./deploy.sh
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" -a "$TRAVIS_BRANCH" = "main" ]; then bash ./deploy.sh; fi'
     
 #notifications:
 #  email:
