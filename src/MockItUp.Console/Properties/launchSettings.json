@@ -1,8 +1,7 @@
 {
   "profiles": {
     "MockItUp.Console": {
-      "commandName": "Project",
-      "commandLineArgs": "\"C:\\Projects\\My\\conf.yml\""
+      "commandName": "Project"
     },
     "Docker": {
       "commandName": "Docker"

@@ -30,7 +30,10 @@ namespace MockItUp.Console
 
             _configPath = args.Length > 0 ? args[0] : Environment.GetEnvironmentVariable("SETTING_FILE");
 
-            Logger.LogInfo($"Load settings from {_configPath}");
+            if (string.IsNullOrEmpty(_configPath))
+                Logger.LogInfo($"Setting file not providered, use default.");
+            else
+                Logger.LogInfo($"Load settings from {_configPath}");
 
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
@@ -58,7 +61,12 @@ namespace MockItUp.Console
             var services = new ServiceCollection();
             
             services.AddSingleton<HttpServer>();
-            services.AddSingleton((s) => Common.Utilities.YamlSerializer.DeserializeFile<HostConfiguration>(_configPath));
+            services.AddSingleton((s) => {
+                if (string.IsNullOrEmpty(_configPath))
+                    return new HostConfiguration();
+                else
+                    return Common.Utilities.YamlSerializer.DeserializeFile<HostConfiguration>(_configPath);
+            });
 
             services.AddSingleton<IRequestHandler, RestfulRequestHandler>();
             services.AddSingleton<StaticMockProvider>();
