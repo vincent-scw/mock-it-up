@@ -7,7 +7,7 @@ namespace MockItUp.Core.Models
         /// <summary>
         /// Version
         /// </summary>
-        public string Version { get; set; }
+        public string Version { get; set; } = "v1";
         /// <summary>
         /// Host
         /// </summary>
@@ -23,14 +23,18 @@ namespace MockItUp.Core.Models
         /// <summary>
         /// Services
         /// </summary>
-        public IDictionary<string, int> Services { get; set; }
+        public IDictionary<string, int> Services { get; set; } = new Dictionary<string, int>
+        {
+            { "*", 5000 } // Default service
+        };
+
         /// <summary>
         /// The directory for spec files
         /// </summary>
-        public string SpecDirectory { get; set; }
+        public string SpecDirectory { get; set; } = "/etc/mockitup.d/specs/";
         /// <summary>
         /// The directory for payload files
         /// </summary>
-        public string PayloadDirectory { get; set; }
+        public string PayloadDirectory { get; set; } = "/etc/mockitup.d/payloads/";
     }
 }
