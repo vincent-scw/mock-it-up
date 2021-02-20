@@ -11,6 +11,7 @@ namespace MockItUp.UnitTest.Core
         [InlineData("api/values{?v}", "http://localhost:5000/api/values?v=1", true)]
         [InlineData("api/values{?v,c}", "http://localhost:5000/api/values?c=acc&v=1", true)]
         [InlineData("api/values/{id}", "http://localhost:5000/api/values/1", true)]
+        [InlineData("/api/values/{id}", "http://localhost:5000/api/values/1", true)]
         [InlineData("api/values/{id}/{sid}", "http://localhost:5000/api/values/1/go", true)]
         [InlineData("api/values", "http://localhost:5000/api/orders", false)]
         [InlineData("api/values{?v}", "http://localhost:5000/api/values?c=acc", false)]
