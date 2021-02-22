@@ -43,14 +43,12 @@ In microservice architecture, a serviec might denpendent to multiple other servi
       var orderId = 215;
       // Register a dynamic stub to mock server
       var regResult = scenario.RegisterDynamicStub(stub =>
-		  var regResult = scenario.RegisterDynamicStub(stub =>
-              stub.WhenRequest("GET", "api/orders/{id}")
-                  .RespondWith(JsonConvert.SerializeObject(new
-                  {
-                      id = orderId,
-                      title = "this is a test"
-                  }))
-                );
+          stub.WhenRequest("GET", "api/orders/{id}")
+              .RespondWith(JsonConvert.SerializeObject(new
+              {
+                  id = orderId,
+                  title = "this is a test"
+              }))
       );
 
       // Do your testing against real service

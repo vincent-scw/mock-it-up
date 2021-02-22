@@ -35,7 +35,7 @@ namespace MockItUp.Console
                     {
                         Body = res.Body,
                         StatusCode = res.StatusCode,
-                        ContentType = res.ContentType ?? "application/json",
+                        ContentType = res.ContentType,
                         Headers = res.Headers
                     }
                 }, req.Service);
