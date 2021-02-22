@@ -42,21 +42,16 @@ In microservice architecture, a serviec might denpendent to multiple other servi
   {
       var orderId = 215;
       // Register a dynamic stub to mock server
-      var regResult = scenario.RegisterDynamicStub(new DynamicStub
-      {
-          // Define request
-          Request = new Request { Method = "GET", UriTemplate = "api/orders/{id}" },
-          // Define response
-          Response = new Response
-          {
-              StatusCode = 200,
-              Body = JsonConvert.SerializeObject(new
-              {
-                  id = orderId,
-                  title = "this is a test"
-              })
-           }
-      });
+      var regResult = scenario.RegisterDynamicStub(stub =>
+		  var regResult = scenario.RegisterDynamicStub(stub =>
+              stub.WhenRequest("GET", "api/orders/{id}")
+                  .RespondWith(JsonConvert.SerializeObject(new
+                  {
+                      id = orderId,
+                      title = "this is a test"
+                  }))
+                );
+      );
 
       // Do your testing against real service
       var response = await httpClient.GetAsync($"{_orderUrl}/api/orders/{orderId}");
