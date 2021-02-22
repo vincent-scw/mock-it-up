@@ -5,32 +5,61 @@ using System.Threading.Tasks;
 
 namespace MockItUp.Client
 {
+    /// <summary>
+    /// A test scenario
+    /// </summary>
     public class TestScenario : IDisposable
     {
         private List<string> _stubIds;
-        private readonly MockController.MockControllerClient _client;
-        public TestScenario(MockController.MockControllerClient client)
+        private readonly Mockctl.MockController.MockControllerClient _client;
+        internal TestScenario(Mockctl.MockController.MockControllerClient client)
         {
             _client = client;
             _stubIds = new List<string>();
         }
 
-        public RegisterResult RegisterDynamicStub(DynamicStub stub)
+        /// <summary>
+        /// Register a dynamic stub.
+        /// </summary>
+        /// <param name="stubAction">Build a stub with request and expected response</param>
+        /// <returns>Register result</returns>
+        public RegisterResult RegisterDynamicStub(Action<DynamicStub> stubAction)
         {
-            var result = _client.RegisterDynamicStub(stub);
+            var stub = new DynamicStub();
+            stubAction(stub);
+            var result = _client.RegisterDynamicStub(stub.InternalStub);
             if (result.Succeed)
                 _stubIds.Add(result.StubID);
-            return result;
+            return new RegisterResult
+            {
+                Succeed = result.Succeed,
+                StubID = result.StubID
+            };
         }
 
-        public async Task<RegisterResult> RegisterDynamicStubAsync(DynamicStub stub)
+        /// <summary>
+        /// Register a dynamic stub async.
+        /// </summary>
+        /// <param name="stubAction">Build a stub with request and expected response</param>
+        /// <returns>Register result</returns>
+        public async Task<RegisterResult> RegisterDynamicStubAsync(Action<DynamicStub> stubAction)
         {
-            var result = await _client.RegisterDynamicStubAsync(stub);
+            var stub = new DynamicStub();
+            stubAction(stub);
+            var result = await _client.RegisterDynamicStubAsync(stub.InternalStub);
             if (result.Succeed)
                 _stubIds.Add(result.StubID);
-            return result;
+            return new RegisterResult
+            {
+                Succeed = result.Succeed,
+                StubID = result.StubID
+            };
         }
 
+        /// <summary>
+        /// Remove dynamic stubs by stub id.
+        /// </summary>
+        /// <param name="stubIds">Stub id list</param>
         public void RemoveDynamicStubs(params string[] stubIds)
         {
             var ids = PrepareStubIDs(stubIds);
@@ -41,6 +70,10 @@ namespace MockItUp.Client
                 _stubIds = _stubIds.Where(x => !stubIds.Contains(x)).ToList();
         }
 
+        /// <summary>
+        /// Remove dynamic stubs by stub id async.
+        /// </summary>
+        /// <param name="stubIds">Stub id list</param>
         public async Task RemoveDynamicStubsAsync(params string[] stubIds)
         {
             var ids = PrepareStubIDs(stubIds);
@@ -51,6 +84,10 @@ namespace MockItUp.Client
                 _stubIds = _stubIds.Where(x => !stubIds.Contains(x)).ToList();
         }
 
+        /// <summary>
+        /// Close current test scenario.
+        /// It removes stubs generated in current scenario.
+        /// </summary>
         public void Close()
         {
             // Remove stubs created in current scenario
@@ -62,13 +99,13 @@ namespace MockItUp.Client
             Close();
         }
 
-        private StubIDs PrepareStubIDs(string[] stubIds)
+        private Mockctl.StubIDs PrepareStubIDs(string[] stubIds)
         {
             if (stubIds == null || stubIds.Length == 0)
             {
                 return null;
             }
-            var ids = new StubIDs();
+            var ids = new Mockctl.StubIDs();
             ids.IdList.Add(stubIds);
             return ids;
         }

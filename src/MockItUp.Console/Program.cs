@@ -100,7 +100,7 @@ namespace MockItUp.Console
             var config = _serviceProvider.GetService<HostConfiguration>();
             var server = new Server
             {
-                Services = { MockController.BindService(new MockControllerImpl(_serviceProvider)) },
+                Services = { Mockctl.MockController.BindService(new MockControllerImpl(_serviceProvider)) },
                 Ports = { new ServerPort(config.Host, config.ContrlPort, ServerCredentials.Insecure) }
             };
             server.Start();
