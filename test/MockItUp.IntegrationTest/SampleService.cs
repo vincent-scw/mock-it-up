@@ -39,13 +39,13 @@ namespace MockItUp.IntegrationTest
             return PutAsync($"{_shipmentUrl}/api/shipments", shipmentObj);
         }
 
-        private async Task<dynamic> GetAsync(string path)
+        public async Task<dynamic> GetAsync(string path)
         {
             var response = await _httpClient.GetAsync(path);
             return await ReadResponseAsync<dynamic>(response.Content);
         }
 
-        private async Task<dynamic> PutAsync(string path, dynamic obj)
+        public async Task<dynamic> PutAsync(string path, dynamic obj)
         {
             var response = await _httpClient.PutAsync(path,
                new StringContent(JsonConvert.SerializeObject(obj)));
