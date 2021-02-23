@@ -4,6 +4,7 @@ using Xunit;
 
 namespace MockItUp.IntegrationTest
 {
+    [Collection("IntegrationTest")]
     public class StaticTests : IDisposable
     {
         private readonly SampleService _service;

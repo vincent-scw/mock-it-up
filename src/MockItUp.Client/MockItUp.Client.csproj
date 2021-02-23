@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\mockctl.proto" GrpcServices="Client">
+    <Protobuf Include="..\mockctl.proto" GrpcServices="Client" Access="internal">
       <Link>mockctl.proto</Link>
     </Protobuf>
   </ItemGroup>

@@ -1,9 +1,9 @@
 ﻿using Grpc.Core;
+using Mockctl;
 using MockItUp.Common;
 using MockItUp.Core.Dynamic;
 using MockItUp.Core.Models;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MockItUp.Console
@@ -35,7 +35,7 @@ namespace MockItUp.Console
                     {
                         Body = res.Body,
                         StatusCode = res.StatusCode,
-                        ContentType = res.ContentType ?? "application/json",
+                        ContentType = res.ContentType,
                         Headers = res.Headers
                     }
                 }, req.Service);

@@ -42,21 +42,14 @@ In microservice architecture, a serviec might denpendent to multiple other servi
   {
       var orderId = 215;
       // Register a dynamic stub to mock server
-      var regResult = scenario.RegisterDynamicStub(new DynamicStub
-      {
-          // Define request
-          Request = new Request { Method = "GET", UriTemplate = "api/orders/{id}" },
-          // Define response
-          Response = new Response
-          {
-              StatusCode = 200,
-              Body = JsonConvert.SerializeObject(new
+      var regResult = scenario.RegisterDynamicStub(stub =>
+          stub.WhenRequest("GET", "api/orders/{id}")
+              .RespondWith(JsonConvert.SerializeObject(new
               {
                   id = orderId,
                   title = "this is a test"
-              })
-           }
-      });
+              }))
+      );
 
       // Do your testing against real service
       var response = await httpClient.GetAsync($"{_orderUrl}/api/orders/{orderId}");
@@ -72,7 +65,7 @@ In microservice architecture, a serviec might denpendent to multiple other servi
   }
   ```
   For details, please refer to [Dynamic Stub Wiki](https://github.com/vincent-scw/mock-it-up/wiki/Dynamic-Stub). 
-* Both ***dynamic*** and ***static*** stubs can work together. Mock It Up try to match the dynamic stub, then static.
+* Both ***dynamic*** and ***static*** stubs can work together. Mock It Up try to match the dynamic stub, then static. Please run tests synchronously to aviod collision.
 * Before running docker containers, don't forget to copy your specs and payloads into container if you want to use ***static*** stubs.
 * Idealy, running acceptence/integration test requires three containers -- Service, Tests and Mock Server-- working together. 
   * Run with docker-compose: ```docker-compose up --abort-on-container-exit --exit-code-from integrationtest```.
