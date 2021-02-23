@@ -15,18 +15,21 @@ namespace MockItUp.Core
 {
     public class RestfulRequestHandler : IRequestHandler
     {
-        private StaticMockProvider _staticMockProvider;
-        private DynamicMockProvider _dynamicMockProvider;
+        private readonly StaticMockProvider _staticMockProvider;
+        private readonly DynamicMockProvider _dynamicMockProvider;
         private readonly HostConfiguration _hostConfiguration;
+        private readonly HitRecordCollection _hitRecordCollection;
 
         public RestfulRequestHandler(
             StaticMockProvider staticMockProvider,
             DynamicMockProvider dynamicMockProvider,
-            HostConfiguration hostConfiguration)
+            HostConfiguration hostConfiguration,
+            HitRecordCollection hitRecordCollection)
         {
             _staticMockProvider = staticMockProvider;
             _dynamicMockProvider = dynamicMockProvider;
             _hostConfiguration = hostConfiguration;
+            _hitRecordCollection = hitRecordCollection;
         }
 
         public async Task HandleAsync(HttpListenerContext context)
@@ -34,13 +37,12 @@ namespace MockItUp.Core
             var req = context.Request;
             var resp = context.Response;
 
-            Logger.LogInfo($"{req.HttpMethod} {req.Url}");
+            var requestModel = BuildRequest(context.Request);
+            Logger.LogInfo($"{requestModel.Method} {requestModel.Path}");
+            Logger.LogInfo($"Request body: {requestModel.Body}");
 
             try
             {
-                var requestModel = BuildRequest(context.Request);
-                Logger.LogInfo($"Request body: {requestModel.Body}");
-
                 var host = _hostConfiguration.Services.FirstOrDefault(kv => kv.Value == context.Request.Url.Port);
                 if (host.Key == null)
                     throw new NotSupportedException($"Cannot handle request {context.Request.Url}. Host not found.");
@@ -68,6 +70,7 @@ namespace MockItUp.Core
                 var responseModel = provider.ResponseResolver.Resolve(requestModel, stub, matchedTemplate);
                 await WriteToHttpResponse(resp, responseModel);
 
+                _hitRecordCollection.Record(requestModel, responseModel);
                 Logger.LogInfo($"Response body: {responseModel.Body}");
             }
             catch (Exception ex)
@@ -75,6 +78,7 @@ namespace MockItUp.Core
                 resp.StatusCode = (int)HttpStatusCode.BadRequest;
                 await RespondBodyAsync(resp, ex.Message);
 
+                _hitRecordCollection.Record(requestModel, null, ex.Message);
                 Logger.LogError(ex.Message, ex);
             }
             finally

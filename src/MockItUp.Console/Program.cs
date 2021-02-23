@@ -71,6 +71,7 @@ namespace MockItUp.Console
             services.AddSingleton<IRequestHandler, RestfulRequestHandler>();
             services.AddSingleton<StaticMockProvider>();
             services.AddSingleton<DynamicMockProvider>();
+            services.AddSingleton<HitRecordCollection>();
             
             _serviceProvider = services.BuildServiceProvider(true);
 
