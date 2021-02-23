@@ -6,7 +6,7 @@ using Xunit;
 
 namespace MockItUp.IntegrationTest
 {
-    [Collection("Dynamic")]
+    [Collection("IntegrationTest")]
     public class DynamicTests : IDisposable
     {
         private readonly SampleService _service;

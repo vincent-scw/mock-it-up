@@ -65,7 +65,7 @@ In microservice architecture, a serviec might denpendent to multiple other servi
   }
   ```
   For details, please refer to [Dynamic Stub Wiki](https://github.com/vincent-scw/mock-it-up/wiki/Dynamic-Stub). 
-* Both ***dynamic*** and ***static*** stubs can work together. Mock It Up try to match the dynamic stub, then static.
+* Both ***dynamic*** and ***static*** stubs can work together. Mock It Up try to match the dynamic stub, then static. Please run tests synchronously to aviod collision.
 * Before running docker containers, don't forget to copy your specs and payloads into container if you want to use ***static*** stubs.
 * Idealy, running acceptence/integration test requires three containers -- Service, Tests and Mock Server-- working together. 
   * Run with docker-compose: ```docker-compose up --abort-on-container-exit --exit-code-from integrationtest```.

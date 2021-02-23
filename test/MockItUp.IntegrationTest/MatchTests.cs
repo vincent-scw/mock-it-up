@@ -5,6 +5,7 @@ using Xunit;
 
 namespace MockItUp.IntegrationTest
 {
+    [Collection("IntegrationTest")]
     public class MatchTests : IDisposable
     {
         private readonly HttpClient _client;

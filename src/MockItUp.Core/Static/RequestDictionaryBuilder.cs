@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MockItUp.Core.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -10,22 +11,22 @@ namespace MockItUp.Core.Static
 {
     internal class RequestDictionaryBuilder
     {
-        public static IDictionary<string, dynamic> Build(HttpListenerRequest hlr, UriTemplateMatch uriMatch, string bodyStr)
+        public static IDictionary<string, dynamic> Build(RequestModel request, UriTemplateMatch uriMatch)
         {
-            var request = new Dictionary<string, object>();
+            var requestDict = new Dictionary<string, object>();
 
-            request["path"] = BuildPath(uriMatch);
-            request["headers"] = BuildHeaders(hlr.Headers);
+            requestDict["path"] = BuildPath(uriMatch);
+            requestDict["headers"] = request.Headers;
             try
             {
-                request["body"] = BuildBody(bodyStr);
+                requestDict["body"] = BuildBody(request.Body);
             }
             catch (JsonReaderException)
             {
-                request["body"] = bodyStr;
+                requestDict["body"] = request.Body;
             }
 
-            return request;
+            return requestDict;
         }
 
         private static IDictionary<string, dynamic> BuildPath(UriTemplateMatch uriMatch)
@@ -34,17 +35,6 @@ namespace MockItUp.Core.Static
             foreach (var b in uriMatch.Bindings)
             {
                 ret.Add(b.Key.ToLower(), b.Value.Value);
-            }
-
-            return ret;
-        }
-
-        private static IDictionary<string, dynamic> BuildHeaders(NameValueCollection headers)
-        {
-            var ret = new Dictionary<string, object>();
-            foreach (var h in headers.AllKeys)
-            {
-                ret.Add(h.ToLower(), headers[h]);
             }
 
             return ret;
