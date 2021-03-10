@@ -20,7 +20,7 @@ namespace MockItUp.Client
         /// <returns></returns>
         public DynamicStub WhenRequest(string method, string uriTemplate, string service = "*")
         {
-            InternalStub.Request = new Mockctl.Request
+            InternalStub.Request = new Mockctl.RequestDef
             {
                 Method = method, UriTemplate = uriTemplate,
                 Service = service
@@ -38,7 +38,7 @@ namespace MockItUp.Client
         /// <returns></returns>
         public DynamicStub RespondWith(string body, int statusCode = 200, string contentType = "application/json", IDictionary<string, string> headers = null)
         {
-            InternalStub.Response = new Mockctl.Response
+            InternalStub.Response = new Mockctl.ResponseDef
             {
                 Body = body,
                 StatusCode = statusCode,

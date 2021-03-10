@@ -18,7 +18,7 @@ namespace MockItUp.Core
 
         public void Record(RequestModel request, ResponseModel response, string msg = null)
         {
-            _records.Add(new HitRecord { Request = request, Response = response, Message = msg, RecordTime = DateTime.Now });
+            _records.Add(new HitRecord { Request = request, Response = response, Message = msg, RecordTime = DateTimeOffset.Now });
         }
 
         IEnumerator IEnumerable.GetEnumerator()
