@@ -2,7 +2,7 @@ sudo: required
 
 env:
   global:
-    - VERSION_NUMBER="0.6.$TRAVIS_BUILD_NUMBER"
+    - VERSION_NUMBER="0.7.$TRAVIS_BUILD_NUMBER"
 
 services:
   - docker
