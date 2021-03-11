@@ -14,6 +14,8 @@ namespace MockItUp.Client
         {
             Time = rec.Time.ToDateTimeOffset();
             Message = rec.Message;
+            Request = new HttpRequest(rec.Request);
+            Response = new HttpResponse(rec.Response);
         }
     }
 

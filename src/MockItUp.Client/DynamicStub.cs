@@ -22,8 +22,9 @@ namespace MockItUp.Client
         {
             InternalStub.Request = new Mockctl.RequestDef
             {
-                Method = method, UriTemplate = uriTemplate,
-                Service = service
+                Method = method ?? "", // Grpc.Tools doesn't support optional null, need to parse empty string here
+                UriTemplate = uriTemplate ?? "",
+                Service = service ?? ""
             };
             return this;
         }
@@ -40,9 +41,9 @@ namespace MockItUp.Client
         {
             InternalStub.Response = new Mockctl.ResponseDef
             {
-                Body = body,
+                Body = body ?? "",
                 StatusCode = statusCode,
-                ContentType = contentType,
+                ContentType = contentType ?? "",
             };
 
             if (headers != null)

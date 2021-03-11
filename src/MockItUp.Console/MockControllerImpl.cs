@@ -83,16 +83,16 @@ namespace MockItUp.Console
                     Message = x.Message,
                     Request = new HttpRequest
                     {
-                        HttpMethod = x.Request.Method,
-                        Uri = x.Request.Path,
-                        Body = x.Request.Body,
+                        HttpMethod = x.Request.Method ?? "",
+                        Uri = x.Request.Path ?? "",
+                        Body = x.Request.Body ?? "",
                         Headers = { x.Request.Headers }
                     },
                     Response = new ResponseDef
                     {
                         StatusCode = x.Response.StatusCode,
-                        ContentType = x.Response.ContentType,
-                        Body = x.Response.Body,
+                        ContentType = x.Response.ContentType ?? "",
+                        Body = x.Response.Body ?? "",
                         Headers = { x.Response.Headers }
                     }
                 };
