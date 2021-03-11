@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+
 package mockctl;
 
 // The mock controller service definition
@@ -8,23 +10,25 @@ service MockController {
 	rpc RegisterDynamicStub (DynamicStub) returns (RegisterResult) {}
 	// Remove dynamic stubs by ids
 	rpc RemoveDynamicStubs (StubIDs) returns (RemoveResult) {}
+	// Get last N records
+	rpc GetLastRecords (NRecords) returns (Records) {}
 }
 
 // A dynamic stub for http request and response
 message DynamicStub {
-	Request request = 1;
-	Response response = 2;
+	RequestDef request = 1;
+	ResponseDef response = 2;
 }
 
 // Http request definition
-message Request {
+message RequestDef {
 	string method = 1;
 	string uriTemplate = 2;
 	string service = 3;
 }
 
 // Http response definition
-message Response {
+message ResponseDef {
 	int32 statusCode = 1;
 	string contentType = 2;
 	string body = 3;
@@ -45,4 +49,26 @@ message StubIDs {
 // Remove result
 message RemoveResult {
 	bool succeed = 1;
+}
+
+message NRecords {
+	int32 n = 1;
+}
+
+message HttpRequest {
+	string httpMethod = 1;
+	string uri = 2;
+	string body = 3;
+	map<string, string> headers = 4;
+}
+
+message Record {
+	google.protobuf.Timestamp time = 1;
+	HttpRequest request = 2;
+	ResponseDef response = 3;
+	string message = 4;
+}
+
+message Records {
+	repeated Record items = 1;
 }

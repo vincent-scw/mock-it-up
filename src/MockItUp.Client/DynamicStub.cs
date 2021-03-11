@@ -20,10 +20,11 @@ namespace MockItUp.Client
         /// <returns></returns>
         public DynamicStub WhenRequest(string method, string uriTemplate, string service = "*")
         {
-            InternalStub.Request = new Mockctl.Request
+            InternalStub.Request = new Mockctl.RequestDef
             {
-                Method = method, UriTemplate = uriTemplate,
-                Service = service
+                Method = method ?? "", // Grpc.Tools doesn't support optional null, need to parse empty string here
+                UriTemplate = uriTemplate ?? "",
+                Service = service ?? ""
             };
             return this;
         }
@@ -38,11 +39,11 @@ namespace MockItUp.Client
         /// <returns></returns>
         public DynamicStub RespondWith(string body, int statusCode = 200, string contentType = "application/json", IDictionary<string, string> headers = null)
         {
-            InternalStub.Response = new Mockctl.Response
+            InternalStub.Response = new Mockctl.ResponseDef
             {
-                Body = body,
+                Body = body ?? "",
                 StatusCode = statusCode,
-                ContentType = contentType,
+                ContentType = contentType ?? "",
             };
 
             if (headers != null)

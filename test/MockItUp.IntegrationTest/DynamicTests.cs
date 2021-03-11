@@ -76,6 +76,9 @@ namespace MockItUp.IntegrationTest
                 var updated = await _service.GetOrderAsync(orderId);
                 Assert.Equal("Removed", (string)updated.status);
             }
+
+            var records = await _client.GetLastNRecordsAsync();
+            Assert.True(records.Count > 0);
         }
     }
 }

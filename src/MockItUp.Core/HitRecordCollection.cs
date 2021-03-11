@@ -16,9 +16,15 @@ namespace MockItUp.Core
             return _records.GetEnumerator();
         }
 
-        public void Record(RequestModel request, ResponseModel response, string msg = null)
+        public void Record(RequestModel request, ResponseModel response, string msg = "")
         {
-            _records.Add(new HitRecord { Request = request, Response = response, Message = msg, RecordTime = DateTime.Now });
+            _records.Add(new HitRecord 
+            { 
+                Request = request, 
+                Response = response, 
+                Message = msg, 
+                RecordTime = DateTimeOffset.Now 
+            });
         }
 
         IEnumerator IEnumerable.GetEnumerator()

@@ -1,5 +1,7 @@
 ﻿using Grpc.Core;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MockItUp.Client
 {
@@ -24,6 +26,24 @@ namespace MockItUp.Client
         public TestScenario BeginScenario()
         {
             return new TestScenario(_client);
+        }
+
+        /// <summary>
+        /// Get last N Http records
+        /// </summary>
+        /// <param name="takeLast">N</param>
+        /// <returns>Records</returns>
+        public async Task<List<Record>> GetLastNRecordsAsync(int takeLast = 10)
+        {
+            var records = await _client.GetLastRecordsAsync(new Mockctl.NRecords { N = takeLast });
+
+            var ret = new List<Record>();
+            foreach (var i in records.Items)
+            {
+                ret.Add(new Record(i));
+            }
+
+            return ret;
         }
 
         public void Dispose()
