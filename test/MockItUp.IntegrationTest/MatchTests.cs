@@ -26,7 +26,7 @@ namespace MockItUp.IntegrationTest
             var response = await _client.GetAsync($"{orderUrl}/api/nomatches");
             var result = await response.Content.ReadAsStringAsync();
 
-            Assert.Equal("Cannot find matched rule. Request ignored.", result);
+            Assert.Equal("Cannot find matched stub. Request ignored.", result);
         }
     }
 }
