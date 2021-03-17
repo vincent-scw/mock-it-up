@@ -60,7 +60,7 @@ namespace MockItUp.Core
                 }
 
                 if (matchedTemplate == null)
-                    throw new NotSupportedException($"Cannot find matched rule. Request ignored.");
+                    throw new NotSupportedException($"Cannot find matched stub. Request ignored.");
 
                 if (stub.Response.Delay > 0)
                 {
