@@ -17,6 +17,9 @@ namespace MockItUp.Core
 
         private IEnumerable<StubItem> GetCandidates(string service)
         {
+            if (_stubRegistry.Stubs == null)
+                return null;
+
             return _stubRegistry.Stubs.ContainsKey(service) ? _stubRegistry.Stubs[service] : _stubRegistry.Stubs.SelectMany(x => x.Value);
         }
 
@@ -24,7 +27,10 @@ namespace MockItUp.Core
         {
             stub = null;
             UriTemplateMatch match = null;
-            foreach (var c in GetCandidates(service))
+            var candidates = GetCandidates(service);
+            if (candidates == null)
+                return null;
+            foreach (var c in candidates)
             {
                 match = c.Match(request.HttpMethod, request.Url);
                 if (match != null)
