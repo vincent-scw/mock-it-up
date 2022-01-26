@@ -53,6 +53,7 @@ message RemoveResult {
 
 message NRecords {
 	int32 n = 1;
+	repeated string stubIDs = 2;
 }
 
 message HttpRequest {
@@ -66,7 +67,6 @@ message Record {
 	google.protobuf.Timestamp time = 1;
 	HttpRequest request = 2;
 	ResponseDef response = 3;
-	string message = 4;
 }
 
 message Records {

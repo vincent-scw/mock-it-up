@@ -5,6 +5,7 @@ using MockItUp.Core;
 using MockItUp.Core.Dynamic;
 using MockItUp.Core.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -75,32 +76,35 @@ namespace MockItUp.Console
 
         public override Task<Records> GetLastRecords(NRecords request, ServerCallContext context)
         {
-            var records = _hitRecords.TakeLast(request.N).Select(x => 
-            {
-                var record = new Record
-                {
-                    Time = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTimeOffset(x.RecordTime),
-                    Message = x.Message,
-                    Request = new HttpRequest
-                    {
-                        HttpMethod = x.Request.Method ?? "",
-                        Uri = x.Request.Path ?? "",
-                        Body = x.Request.Body ?? "",
-                        Headers = { x.Request.Headers }
-                    },
-                    Response = new ResponseDef
-                    {
-                        StatusCode = x.Response.StatusCode,
-                        ContentType = x.Response.ContentType ?? "",
-                        Body = x.Response.Body ?? "",
-                        Headers = { x.Response.Headers }
-                    }
-                };
-
-                return record;
-            });
+            var records = request.N > 0 ? 
+                _hitRecords.TakeLast(request.N).Select(BuildRecord) : 
+                _hitRecords.Where(x => request.StubIDs.Contains(x.Stub.ID)).Select(BuildRecord);
 
             return Task.FromResult(new Records { Items = { records } });
+        }
+
+        private static Record BuildRecord(HitRecord x)
+        {
+            var record = new Record
+            {
+                Time = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTimeOffset(x.RecordTime),
+                Request = new HttpRequest
+                {
+                    HttpMethod = x.Request.Method ?? "",
+                    Uri = x.Request.Path ?? "",
+                    Body = x.Request.Body ?? "",
+                    Headers = { x.Request.Headers }
+                },
+                Response = new ResponseDef
+                {
+                    StatusCode = x.Response.StatusCode,
+                    ContentType = x.Response.ContentType ?? "",
+                    Body = x.Response.Body ?? "",
+                    Headers = { x.Response.Headers }
+                }
+            };
+
+            return record;
         }
     }
 }

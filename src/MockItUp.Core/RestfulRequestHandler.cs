@@ -70,7 +70,7 @@ namespace MockItUp.Core
                 var responseModel = provider.ResponseResolver.Resolve(requestModel, stub, matchedTemplate);
                 await WriteToHttpResponse(resp, responseModel);
 
-                _hitRecordCollection.Record(requestModel, responseModel);
+                _hitRecordCollection.Record(requestModel, responseModel, stub);
                 Logger.LogInfo($"Response body: {responseModel.Body}");
             }
             catch (Exception ex)
@@ -78,7 +78,6 @@ namespace MockItUp.Core
                 resp.StatusCode = (int)HttpStatusCode.BadRequest;
                 await RespondBodyAsync(resp, ex.Message);
 
-                _hitRecordCollection.Record(requestModel, null, ex.Message);
                 Logger.LogError(ex.Message, ex);
             }
             finally

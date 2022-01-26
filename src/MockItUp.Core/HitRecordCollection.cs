@@ -16,13 +16,13 @@ namespace MockItUp.Core
             return _records.GetEnumerator();
         }
 
-        public void Record(RequestModel request, ResponseModel response, string msg = "")
+        public void Record(RequestModel request, ResponseModel response, StubItem stub)
         {
             _records.Add(new HitRecord 
             { 
                 Request = request, 
-                Response = response, 
-                Message = msg, 
+                Response = response,
+                Stub = stub,
                 RecordTime = DateTimeOffset.Now 
             });
         }

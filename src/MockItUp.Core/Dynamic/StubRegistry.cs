@@ -1,6 +1,6 @@
 ﻿using MockItUp.Core.Contracts;
 using MockItUp.Core.Models;
-using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,21 +8,21 @@ namespace MockItUp.Core.Dynamic
 {
     public class StubRegistry : IStubRegistry
     {
-        private readonly Dictionary<string, IList<StubItem>> _stubDict;
+        private readonly ConcurrentDictionary<string, IList<StubItem>> _stubDict;
         public StubRegistry()
         {
-            _stubDict = new Dictionary<string, IList<StubItem>>();
+            _stubDict = new ConcurrentDictionary<string, IList<StubItem>>();
         }
 
         public IReadOnlyDictionary<string, IList<StubItem>> Stubs => _stubDict;
 
-        public Guid Register(StubItem stub, string service)
+        public string Register(StubItem stub, string service)
         {
             var key = service;
             if (string.IsNullOrEmpty(service))
                 key = "*";
 
-            var id = Guid.NewGuid();
+            var id = IdGen.Generate();
             stub.SetID(id);
 
             IList<StubItem> items;

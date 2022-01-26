@@ -6,14 +6,12 @@ namespace MockItUp.Client
     public class Record
     {
         public DateTimeOffset Time { get; private set; }
-        public string Message { get; private set; }
         public HttpRequest Request { get; private set; }
         public HttpResponse Response { get; private set; }
 
         internal Record(Mockctl.Record rec)
         {
             Time = rec.Time.ToDateTimeOffset();
-            Message = rec.Message;
             Request = new HttpRequest(rec.Request);
             Response = new HttpResponse(rec.Response);
         }

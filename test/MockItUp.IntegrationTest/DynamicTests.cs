@@ -1,6 +1,7 @@
 ﻿using MockItUp.Client;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -45,6 +46,9 @@ namespace MockItUp.IntegrationTest
 
                 Assert.Equal(orderId, (int)order.id);
                 Assert.Equal("this is a test", (string)order.title);
+
+                var records = await scenario.GetAllHitRecordsAsync();
+                Assert.Contains(records, x => x.Request.Uri.Contains($"/api/orders/{orderId}"));
             }
         }
 
@@ -78,7 +82,7 @@ namespace MockItUp.IntegrationTest
             }
 
             var records = await _client.GetLastNRecordsAsync();
-            Assert.True(records.Count > 0);
+            Assert.True(records.Any());
         }
     }
 }
