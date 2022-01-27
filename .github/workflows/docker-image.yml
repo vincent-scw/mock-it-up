@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [development]
     
+env:
+  VERSION_NUMBER: 0.8.${GITHUB_RUN_NUMBER}
+
 jobs:
 
   build:
@@ -22,12 +25,20 @@ jobs:
       run: dotnet restore
     - name: Build
       run: |
-        echo "Build project with version 0.8.${GITHUB_RUN_NUMBER}"
-        dotnet build --configuration Release --no-restore -p:Version=0.8.${GITHUB_RUN_NUMBER}
+        echo "Build project with version $VERSION_NUMBER"
+        dotnet build --configuration Release --no-restore -p:Version=$VERSION_NUMBER
     - name: Unit Test
       run: dotnet test test/MockItUp.UnitTest/MockItUp.UnitTest.csproj
     - name: Integration Test
       run: docker-compose up --build --abort-on-container-exit --exit-code-from integrationtest
       
-    #- name: Build the Docker image
-    #  run: docker build ./src --file ./src/MockItUp.Console/Dockerfile --tag edentidus/mockitup:$(date +%s) --tag edentidus/mockitup:latest
+  deploy:
+    if: ${{ github.ref_name == 'main' && github.event_name != 'pull_request' }}
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: |
+        echo "Build docker image with version $VERSION_NUMBER"
+        docker build ./src --file ./src/MockItUp.Console/Dockerfile --tag edentidus/mockitup:$VERSION_NUMBER --tag edentidus/mockitup:latest
