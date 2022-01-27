@@ -24,21 +24,45 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: |
-        echo "Build project with version $VERSION_NUMBER"
-        dotnet build --configuration Release --no-restore -p:Version=$VERSION_NUMBER
+      run: dotnet build --configuration Release --no-restore
     - name: Unit Test
       run: dotnet test test/MockItUp.UnitTest/MockItUp.UnitTest.csproj
     - name: Integration Test
       run: docker-compose up --build --abort-on-container-exit --exit-code-from integrationtest
       
   deploy:
+    needs: build
     if: ${{ github.ref_name == 'main' && github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v2
+    - name: Setup .Net Core SDK
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.x'
     - name: Build the Docker image
       run: |
         echo "Build docker image with version $VERSION_NUMBER"
         docker build ./src --file ./src/MockItUp.Console/Dockerfile --tag edentidus/mockitup:$VERSION_NUMBER --tag edentidus/mockitup:latest
+    - name: Login Dokcer.io
+      env:
+        USERNAME: ${{secrets.DOCKER_USERNAME}}
+        PASSWORD: ${{secrets.DOCKER_PWD}}
+      run: |
+        echo $PASSWORD | docker login -u $USERNAME --password-stdin 
+    - name: Push image
+      run: |
+        docker push edentidus/mockitup:$VERSION_NUMBER
+        docker push edentidus/mockitup:latest
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: |
+        echo "Build project with version $VERSION_NUMBER"
+        dotnet build --configuration Release --no-restore -p:Version=$VERSION_NUMBER
+    - name: Publish Nuget
+      env:
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      run: |
+        dotnet nuget push ./src/MockItUp.Client/bin/Release/MockItUp.Client.$VERSION_NUMBER.nupkg --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json
