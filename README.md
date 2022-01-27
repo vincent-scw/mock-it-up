@@ -6,6 +6,7 @@
 
 ```docker 
 docker pull edentidus/mockitup
+docker run -p 5000:5000 -p 30000:30000 edentidus/mockitup
 ```
 
 ## Motivation

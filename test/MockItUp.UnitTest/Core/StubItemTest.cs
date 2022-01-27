@@ -8,6 +8,11 @@ namespace MockItUp.UnitTest.Core
     {
         [Theory]
         [InlineData("/api/orders", "https://test.com/api/orders")]
+        [InlineData("api/orders", "https://test.com/api/orders")]
+        [InlineData("api/orders/{orderId}", "https://test.com/api/orders/123")]
+        [InlineData("api/orders?status={status}", "https://test.com/api/orders?status=created")]
+        //[InlineData("api/orders?status={status}", "https://test.com/api/orders")]
+        //[InlineData("api/orders?status={status}&createdBy=me", "https://test.com/api/orders?createdBy=me&status=created")]
         //[InlineData("/api/orders", "https://test.com/api/orders/")]
         public void Url_ShouldMatch(string urlTemplate, string urlCandidate)
         {
