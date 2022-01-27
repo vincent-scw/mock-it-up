@@ -7,7 +7,7 @@ on:
     branches: [development]
     
 env:
-  VERSION_NUMBER: 0.8.$GITHUB_RUN_NUMBER
+  VERSION_NUMBER: 0.8.${{GITHUB_RUN_NUMBER}}
 
 jobs:
 
