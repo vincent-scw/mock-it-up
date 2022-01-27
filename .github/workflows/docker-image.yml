@@ -1,0 +1,33 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [main, development]
+  pull_request:
+    branches: [development]
+    
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .Net Core SDK
+      uses: actions/setup-dotnet@1.7.2
+      with:
+        dotnet-version: '3.1.x'
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: |
+        echo "Build project with version 0.8.${GITHUB_RUN_NUMBER}"
+        dotnet build --configuration Release --no-restore -p:Version=0.8.${GITHUB_RUN_NUMBER}
+    - name: Unit Test
+      run: dotnet test test/MockItUp.UnitTest/MockItUp.UnitTest.csproj
+    - name: Integration Test
+      run: docker-compose up --build --abort-on-container-exit --exit-code-from integrationtest
+      
+    #- name: Build the Docker image
+    #  run: docker build ./src --file ./src/MockItUp.Console/Dockerfile --tag edentidus/mockitup:$(date +%s) --tag edentidus/mockitup:latest
