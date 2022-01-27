@@ -22,7 +22,12 @@ jobs:
       with:
         dotnet-version: '3.1.x'
     - name: Install dependencies
-      run: dotnet restore
+      env:
+        username: ${{secrets.DOCKER_USERNAME}}
+        password: ${{secrets.DOCKER_PWD}}
+      run: |
+        echo "$username $password"
+        dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Unit Test
