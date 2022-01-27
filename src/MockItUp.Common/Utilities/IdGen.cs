@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MockItUp.Core
+namespace MockItUp.Common.Utilities
 {
     public static class IdGen
     {

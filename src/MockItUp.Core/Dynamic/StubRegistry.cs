@@ -3,6 +3,7 @@ using MockItUp.Core.Models;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using MockItUp.Common.Utilities;
 
 namespace MockItUp.Core.Dynamic
 {
