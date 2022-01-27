@@ -1,6 +1,7 @@
 ﻿using MockItUp.Client;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -45,6 +46,9 @@ namespace MockItUp.IntegrationTest
 
                 Assert.Equal(orderId, (int)order.id);
                 Assert.Equal("this is a test", (string)order.title);
+
+                var records = await scenario.GetAllHitRecordsAsync();
+                Assert.Contains(records, x => x.Request.Uri.Contains($"/api/orders/{orderId}"));
             }
         }
 
@@ -78,7 +82,31 @@ namespace MockItUp.IntegrationTest
             }
 
             var records = await _client.GetLastNRecordsAsync();
-            Assert.True(records.Count > 0);
+            Assert.True(records.Any());
+        }
+
+        [Fact]
+        public async Task RegisterMultipleStubs_ShouldWork()
+        {
+            using (var scenario = _client.BeginScenario())
+            {
+                var orderId = 215;
+                scenario.RegisterDynamicStubAsync(stub =>
+                    stub.WhenRequest("GET", $"api/orders/{orderId}")
+                        .RespondWith(JsonConvert.SerializeObject(new { id = orderId })));
+
+                var shipmentId = "SH20210101LA";
+                scenario.RegisterDynamicStubAsync(stub =>
+                    stub.WhenRequest("GET", $"api/shipments/{shipmentId}")
+                        .RespondWith(JsonConvert.SerializeObject(new { id = shipmentId })));
+
+                await Task.Delay(1000); // Wait for 1 sec, stubs should be registered
+
+                var order = await _service.GetOrderAsync(orderId);
+                var shipment = await _service.GetShipmentAsync(shipmentId);
+                Assert.Equal(orderId, (int)order.id);
+                Assert.Equal(shipmentId, (string)shipment.id);
+            }
         }
     }
 }

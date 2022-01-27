@@ -15,7 +15,7 @@ namespace MockItUp.Core.Models
         /// <summary>
         /// Port for control server
         /// </summary>
-        public int ContrlPort { get; set; } = 30000;
+        public int ControlPort { get; set; } = 30000;
         /// <summary>
         /// Accept connections simultaneously
         /// </summary>

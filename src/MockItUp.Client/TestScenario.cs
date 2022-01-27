@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mockctl;
 
 namespace MockItUp.Client
 {
@@ -82,6 +83,31 @@ namespace MockItUp.Client
 
             if ((await _client.RemoveDynamicStubsAsync(ids)).Succeed)
                 _stubIds = _stubIds.Where(x => !stubIds.Contains(x)).ToList();
+        }
+
+        /// <summary>
+        /// Get hit records with stub id
+        /// </summary>
+        /// <param name="stubIds">A list of stub id</param>
+        /// <returns>Hit records</returns>
+        public async Task<IEnumerable<Record>> GetHitRecordsForStubsAsync(params string[] stubIds)
+        {
+            var ids = PrepareStubIDs(stubIds);
+            if (ids == null)
+                return new List<Record>();
+
+            var records = await _client.GetLastRecordsAsync(new NRecords { StubIDs = { stubIds } });
+            return records.Items.Select(x => new Record(x));
+        }
+
+        /// <summary>
+        /// Get all hit records within current scenario
+        /// </summary>
+        /// <returns>Hit records</returns>
+        public async Task<IEnumerable<Record>> GetAllHitRecordsAsync()
+        {
+            var records = await _client.GetLastRecordsAsync(new NRecords { StubIDs = { _stubIds } });
+            return records.Items.Select(x => new Record(x));
         }
 
         /// <summary>

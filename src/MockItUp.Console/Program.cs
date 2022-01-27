@@ -31,7 +31,7 @@ namespace MockItUp.Console
             _configPath = args.Length > 0 ? args[0] : Environment.GetEnvironmentVariable("SETTING_FILE");
 
             if (string.IsNullOrEmpty(_configPath))
-                Logger.LogInfo($"Setting file not providered, use default.");
+                Logger.LogInfo($"Setting file not provided, use default.");
             else
                 Logger.LogInfo($"Load settings from {_configPath}");
 
@@ -102,7 +102,7 @@ namespace MockItUp.Console
             var server = new Server
             {
                 Services = { Mockctl.MockController.BindService(new MockControllerImpl(_serviceProvider)) },
-                Ports = { new ServerPort(config.Host, config.ContrlPort, ServerCredentials.Insecure) }
+                Ports = { new ServerPort(config.Host, config.ControlPort, ServerCredentials.Insecure) }
             };
             server.Start();
 

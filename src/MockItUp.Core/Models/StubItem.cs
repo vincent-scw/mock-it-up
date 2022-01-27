@@ -5,11 +5,11 @@ namespace MockItUp.Core.Models
 {
     public class StubItem
     {
-        public Guid ID { get; private set; }
+        public string ID { get; private set; }
         public RequestModel Request { get; set; }
         public ResponseModel Response { get; set; }
 
-        public void SetID(Guid id)
+        public void SetID(string id)
         {
             ID = id;
         }
