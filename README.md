@@ -1,12 +1,17 @@
-[![Build Status](https://travis-ci.org/vincent-scw/mock-it-up.svg?branch=main)](https://travis-ci.org/vincent-scw/mock-it-up)
+![CI/CD](https://github.com/vincent-scw/mock-it-up/actions/workflows/docker-image.yml/badge.svg)
 
 # mock-it-up
 ***Mock It Up*** is a mock server for testing purpose. It supports both ***static*** and ***dynamic*** stubs consist of http request/response.
 
-
+## Install
+* Install server
 ```docker 
 docker pull edentidus/mockitup
 docker run -p 5000:5000 -p 30000:30000 edentidus/mockitup
+```
+* Install client (C#)
+```
+Install-Package MockItUp.Client
 ```
 
 ## Motivation
