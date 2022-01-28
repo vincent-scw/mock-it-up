@@ -1,5 +1,6 @@
 ﻿using MockItUp.Core.Models;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace MockItUp.UnitTest.Core
@@ -17,8 +18,8 @@ namespace MockItUp.UnitTest.Core
         public void Url_ShouldMatch(string urlTemplate, string urlCandidate)
         {
             var stub = new StubItem() { Request = new RequestModel { Method = "get", Path = urlTemplate } };
-            var matched = stub.Match("get", new Uri(urlCandidate));
-            Assert.NotNull(matched);
+            var matched = stub.Match("get", new Uri(urlCandidate), out Dictionary<string, string> _);
+            Assert.True(matched);
         }
     }
 }

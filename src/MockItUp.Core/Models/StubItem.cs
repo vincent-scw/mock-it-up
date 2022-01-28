@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UriTemplate.Core;
 
 namespace MockItUp.Core.Models
@@ -28,6 +29,17 @@ namespace MockItUp.Core.Models
             var template = new UriTemplate.Core.UriTemplate(formatted.OriginalString);
             var matchResult = template.Match(url);
             return matchResult;
+        }
+
+        public bool Match(string method, Uri url, out Dictionary<string, string> bindings)
+        {
+            bindings = new Dictionary<string, string>();
+            // Check http method
+            if (!Request.Method.Equals(method, StringComparison.InvariantCultureIgnoreCase))
+                return false;
+
+            // Check path
+            return false;
         }
     }
 }
