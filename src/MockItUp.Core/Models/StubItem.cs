@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UriTemplate.Core;
 
 namespace MockItUp.Core.Models
@@ -23,23 +22,17 @@ namespace MockItUp.Core.Models
 
             // Check path
             // Use requested host to match template
-            if (!Uri.TryCreate(new Uri($"{url.Scheme}://{url.Authority}"), Request.Path, out Uri formatted))
+            if (!Uri.TryCreate(UrlNormalizer.NormalizeUrl($"{url.Scheme}://{url.Authority}/{Request.Path}"), UriKind.Absolute, out Uri formatted))
+                return null;
+
+            var normalizedCandidate = url.NormalizeUrl();
+            if (!Uri.TryCreate(normalizedCandidate, UriKind.Absolute, out Uri candidateUrl))
                 return null;
 
             var template = new UriTemplate.Core.UriTemplate(formatted.OriginalString);
-            var matchResult = template.Match(url);
+            var matchResult = template.Match(candidateUrl);
+            // TODO: in match result, the url bindings will be all in lower case
             return matchResult;
-        }
-
-        public bool Match(string method, Uri url, out Dictionary<string, string> bindings)
-        {
-            bindings = new Dictionary<string, string>();
-            // Check http method
-            if (!Request.Method.Equals(method, StringComparison.InvariantCultureIgnoreCase))
-                return false;
-
-            // Check path
-            return false;
         }
     }
 }

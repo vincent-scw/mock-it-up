@@ -1,24 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 
 namespace MockItUp.Core
 {
     public static class UrlNormalizer
     {
-        public static bool AreTheSameUrls(this string url1, string url2)
-        {
-            url1 = url1.NormalizeUrl();
-            url2 = url2.NormalizeUrl();
-            return url1.Equals(url2);
-        }
-
-        public static bool AreTheSameUrls(this Uri uri1, Uri uri2)
-        {
-            var url1 = uri1.NormalizeUrl();
-            var url2 = uri2.NormalizeUrl();
-            return url1.Equals(url2);
-        }
-
         public static string[] DefaultDirectoryIndexes = new[]
             {
                 "default.asp",
@@ -37,7 +24,10 @@ namespace MockItUp.Core
             url = RemoveDuplicateSlashes(url);
             url = AddWww(url);
             url = RemoveFeedburnerPart(url);
-            return RemoveTrailingSlashAndEmptyQuery(url);
+            url = RemoveTrailingSlashAndEmptyQuery(url);
+            url = SortQueryString(url);
+
+            return url;
         }
 
         public static string NormalizeUrl(this string url)
@@ -62,8 +52,8 @@ namespace MockItUp.Core
 
         private static string RemoveDuplicateSlashes(string url)
         {
-            var path = new Uri(url).AbsolutePath;
-            return path.Contains("//") ? url.Replace(path, path.Replace("//", "/")) : url;
+            return url.Replace("//", "/")
+                .Replace(":/", "://");
         }
 
         private static string LimitProtocols(string url)
@@ -100,6 +90,26 @@ namespace MockItUp.Core
                 }
             }
             return url;
+        }
+
+        private static string SortQueryString(string url)
+        {
+            var queryStart = url.IndexOf("?", StringComparison.InvariantCultureIgnoreCase);
+            if (queryStart < 0)
+                return url;
+
+            var queries = url.Substring(queryStart + 1)
+                .Split('&')
+                .ToList();
+
+            queries.Sort((a, b) =>
+            {
+                var ka = a.Split('=').First();
+                var kb = b.Split('=').First();
+                return String.Compare(ka, kb, StringComparison.InvariantCultureIgnoreCase);
+            });
+
+            return url.Substring(0, queryStart + 1) + string.Join("&", queries.ToArray());
         }
     }
 }

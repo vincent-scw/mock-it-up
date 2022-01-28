@@ -22,7 +22,7 @@ namespace MockItUp.IntegrationTest
         public async Task ViewShipment()
         {
             var orderId = 10000;
-            var shipmentId = "SH20210101LA";
+            var shipmentId = "sh20210101la";
 
             // Create order
             var orderRes = await _service.CreateOrderAsync(new

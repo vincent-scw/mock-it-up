@@ -5,132 +5,26 @@ namespace MockItUp.UnitTest.Core
 {
     public class UrlNormalizerTest
     {
-        [Fact]
-        public void Test1ConvertingTheSchemeAndHostToLowercase()
+        [Theory]
+        [InlineData("HTTP://www.Example.com/", "http://www.example.com/")]
+        [InlineData("http://www.example.com/a%c2%b1b", "http://www.example.com/a%C2%B1b")]
+        [InlineData("http://www.example.com/%7Eusername/", "http://www.example.com/~username/")]
+        [InlineData("http://www.example.com:80/bar.html", "http://www.example.com/bar.html")]
+        [InlineData("http://www.example.com/alice", "http://www.example.com/alice/?")]
+        [InlineData("http://www.example.com/../a/b/../c/./d.html", "http://www.example.com/a/c/d.html")]
+        [InlineData("http://www.example.com/default.asp", "http://www.example.com/")]
+        [InlineData("http://www.example.com/default.asp?id=1", "http://www.example.com/default.asp?id=1")]
+        [InlineData("http://www.example.com/a/index.html", "http://www.example.com/a/")]
+        [InlineData("http://www.example.com/bar.html#section1", "http://www.example.com/bar.html")]
+        [InlineData("https://www.example.com/", "http://www.example.com/")]
+        [InlineData("http://www.example.com/foo//bar.html", "http://www.example.com/foo/bar.html")]
+        [InlineData("http://example.com/", "http://www.example.com")]
+        [InlineData("http://site.net/2013/02/firefox-19-released/?utm_source=rss&utm_medium=rss&utm_campaign=firefox-19-released",
+            "http://site.net/2013/02/firefox-19-released")]
+        [InlineData("http://www.example.com?p1=a&p2=b", "http://www.example.com?p2=b&p1=a")]
+        public void Normalized_ShouldBeSame(string url1, string url2)
         {
-            var url1 = "HTTP://www.Example.com/".NormalizeUrl();
-            var url2 = "http://www.example.com/".NormalizeUrl();
-
-            Assert.Equal(url1, url2);
-        }
-
-        [Fact]
-        public void Test2CapitalizingLettersInEscapeSequences()
-        {
-            var url1 = "http://www.example.com/a%c2%b1b".NormalizeUrl();
-            var url2 = "http://www.example.com/a%C2%B1b".NormalizeUrl();
-
-            Assert.Equal(url1, url2);
-        }
-
-        [Fact]
-        public void Test3DecodingPercentEncodedOctetsOfUnreservedCharacters()
-        {
-            var url1 = "http://www.example.com/%7Eusername/".NormalizeUrl();
-            var url2 = "http://www.example.com/~username/".NormalizeUrl();
-
-            Assert.Equal(url1, url2);
-        }
-
-        [Fact]
-        public void Test4RemovingTheDefaultPort()
-        {
-            var url1 = "http://www.example.com:80/bar.html".NormalizeUrl();
-            var url2 = "http://www.example.com/bar.html".NormalizeUrl();
-
-            Assert.Equal(url1, url2);
-        }
-
-        [Fact]
-        public void Test5AddingTrailing()
-        {
-            var url1 = "http://www.example.com/alice".NormalizeUrl();
-            var url2 = "http://www.example.com/alice/?".NormalizeUrl();
-
-            Assert.Equal(url1, url2);
-        }
-
-        [Fact]
-        public void Test6RemovingDotSegments()
-        {
-            var url1 = "http://www.example.com/../a/b/../c/./d.html".NormalizeUrl();
-            var url2 = "http://www.example.com/a/c/d.html".NormalizeUrl();
-
-            Assert.Equal(url1, url2);
-        }
-
-        [Fact]
-        public void Test7RemovingDirectoryIndex1()
-        {
-            var url1 = "http://www.example.com/default.asp".NormalizeUrl();
-            var url2 = "http://www.example.com/".NormalizeUrl();
-
-            Assert.Equal(url1, url2);
-        }
-
-        [Fact]
-        public void Test7RemovingDirectoryIndex2()
-        {
-            var url1 = "http://www.example.com/default.asp?id=1".NormalizeUrl();
-            var url2 = "http://www.example.com/default.asp?id=1".NormalizeUrl();
-
-            Assert.Equal(url1, url2);
-        }
-
-        [Fact]
-        public void Test7RemovingDirectoryIndex3()
-        {
-            var url1 = "http://www.example.com/a/index.html".NormalizeUrl();
-            var url2 = "http://www.example.com/a/".NormalizeUrl();
-
-            Assert.Equal(url1, url2);
-        }
-
-        [Fact]
-        public void Test8RemovingTheFragment()
-        {
-            var url1 = "http://www.example.com/bar.html#section1".NormalizeUrl();
-            var url2 = "http://www.example.com/bar.html".NormalizeUrl();
-
-            Assert.Equal(url1, url2);
-        }
-
-        [Fact]
-        public void Test9LimitingProtocols()
-        {
-            var url1 = "https://www.example.com/".NormalizeUrl();
-            var url2 = "http://www.example.com/".NormalizeUrl();
-
-            Assert.Equal(url1, url2);
-        }
-
-        [Fact]
-        public void Test10RemovingDuplicateSlashes()
-        {
-            var url1 = "http://www.example.com/foo//bar.html".NormalizeUrl();
-            var url2 = "http://www.example.com/foo/bar.html".NormalizeUrl();
-
-            Assert.Equal(url1, url2);
-        }
-
-        [Fact]
-        public void Test11AddWww()
-        {
-            var url1 = "http://example.com/".NormalizeUrl();
-            var url2 = "http://www.example.com".NormalizeUrl();
-
-            Assert.Equal(url1, url2);
-        }
-
-        [Fact]
-        public void Test12RemoveFeedburnerPart()
-        {
-            var url1 =
-                "http://site.net/2013/02/firefox-19-released/?utm_source=rss&utm_medium=rss&utm_campaign=firefox-19-released"
-                    .NormalizeUrl();
-            var url2 = "http://site.net/2013/02/firefox-19-released".NormalizeUrl();
-
-            Assert.Equal(url1, url2);
+            Assert.Equal(url1.NormalizeUrl(), url2.NormalizeUrl());
         }
     }
 }

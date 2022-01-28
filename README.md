@@ -71,6 +71,7 @@ In microservice architecture, a serviec might denpendent to multiple other servi
 * Idealy, running acceptence/integration test requires three containers -- Service, Tests and Mock Server-- working together. 
   * Run with docker-compose: ```docker-compose up --abort-on-container-exit --exit-code-from integrationtest```.
   * Run in K8S: Include ***Mock It Up*** as a sidecar together with api service.
+* For more URL match examples, please refer to [Tests](https://github.com/vincent-scw/mock-it-up/blob/development/test/MockItUp.UnitTest/Core/StubItemTest.cs).
   
 ## Config the mock server
 When start, ***Mock It Up*** reads settings via configuration file. Please ref to [config.yml](https://github.com/vincent-scw/mock-it-up/blob/main/test/MockItUp.IntegrationTest/mockitup.d/conf.yml)
