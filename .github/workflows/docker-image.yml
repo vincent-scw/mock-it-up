@@ -8,8 +8,6 @@ on:
     
 env:
   VERSION_NUMBER: 0.8.${{ github.run_number }}
-  username: ${{secrets.DOCKER_USERNAME}}
-  password: ${{secrets.DOCKER_PWD}}
 
 jobs:
 
@@ -24,9 +22,7 @@ jobs:
       with:
         dotnet-version: '3.1.x'
     - name: Install dependencies
-      run: |
-        echo "$username $password"
-        dotnet restore
+      run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Unit Test
