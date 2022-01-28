@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/vincent-scw/mock-it-up.svg?branch=main)](https://travis-ci.org/vincent-scw/mock-it-up)
+![CI/CD](https://github.com/vincent-scw/mock-it-up/actions/workflows/docker-image.yml/badge.svg)
 
 # mock-it-up
 ***Mock It Up*** is a mock server for testing purpose. It supports both ***static*** and ***dynamic*** stubs consist of http request/response.
@@ -76,6 +76,7 @@ In microservice architecture, a serviec might denpendent to multiple other servi
 * Idealy, running acceptence/integration test requires three containers -- Service, Tests and Mock Server-- working together. 
   * Run with docker-compose: ```docker-compose up --abort-on-container-exit --exit-code-from integrationtest```.
   * Run in K8S: Include ***Mock It Up*** as a sidecar together with api service.
+* For more URL match examples, please refer to [Tests](https://github.com/vincent-scw/mock-it-up/blob/development/test/MockItUp.UnitTest/Core/StubItemTest.cs).
   
 ## Config the mock server
 When start, ***Mock It Up*** reads settings via configuration file. Please ref to [config.yml](https://github.com/vincent-scw/mock-it-up/blob/main/test/MockItUp.IntegrationTest/mockitup.d/conf.yml)

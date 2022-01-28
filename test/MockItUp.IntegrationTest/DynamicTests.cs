@@ -95,7 +95,7 @@ namespace MockItUp.IntegrationTest
                     stub.WhenRequest("GET", $"api/orders/{orderId}")
                         .RespondWith(JsonConvert.SerializeObject(new { id = orderId })));
 
-                var shipmentId = "SH20210101LA";
+                var shipmentId = "sh20210101la";
                 scenario.RegisterDynamicStubAsync(stub =>
                     stub.WhenRequest("GET", $"api/shipments/{shipmentId}")
                         .RespondWith(JsonConvert.SerializeObject(new { id = shipmentId })));

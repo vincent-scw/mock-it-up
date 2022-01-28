@@ -1,6 +1,6 @@
 {
 	"orderId": ${p.id},
-	"customerId": "C123",
+	"customerId": "c123",
 	"shipped": true,
-	"shipmentId": "SH20210101LA"
+	"shipmentId": "sh20210101la"
 }
