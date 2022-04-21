@@ -26,6 +26,9 @@ namespace MockItUp.Console
             var logRepo = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepo, new FileInfo("log4net.config"));
 
+            // Try fix GRPC DNS error
+            Envrionment.SetEnvironmentVariable("GRPC_DNS_RESOLVER", "native");
+            
             RegisterServices();
 
             _configPath = args.Length > 0 ? args[0] : Environment.GetEnvironmentVariable("SETTING_FILE");
