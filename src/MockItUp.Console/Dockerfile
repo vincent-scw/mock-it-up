@@ -17,6 +17,7 @@ FROM build AS publish
 RUN dotnet publish "MockItUp.Console.csproj" -c Release -o /app/publish
 
 FROM base AS final
+ENV GRPC_DNS_RESOLVER=native
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "MockItUp.Console.dll"]
