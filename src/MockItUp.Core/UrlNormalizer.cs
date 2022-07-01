@@ -69,7 +69,7 @@ namespace MockItUp.Core
 
         private static string UrlToLower(Uri uri)
         {
-            return HttpUtility.UrlDecode(uri.AbsoluteUri.ToLowerInvariant());
+            return uri.AbsoluteUri.ToLowerInvariant();
         }
 
         private static string RemoveTrailingSlashAndEmptyQuery(string url)
